@@ -118,34 +118,30 @@ E.g. if NUM is -6, then returns -1"
   (/ num (abs num)))
 
 (defun jqt/window-control ()
-  "Creates a temporary overlay map for:
- - `f' switch to next window
- - `b' switch to previous window
- - `p' switch to previous buffer
- - `n' switch to next buffer
- - `j' switch to top jabber buffer
- - `s' switch to buffer from the minibuffer
- - `d' delete current window
- - `c' split window to compare last two buffers
- - `1' delete other windows
- - `2' split frame with one-third and two-third ratios
- - `3' split frame into equal thirds"
+  "Creates a temporary overlay map for one-key window control."
   (interactive)
-  (jqt/continue-more
-   '(;; switch windows
-     (?f '(other-window 1))
-     (?b '(other-window -1))
-     ;; switch buffers
-     (?p previous-buffer)
-     (?n next-buffer)
-     (?j jqt/switch-to-jabber-chat-buffer)
-     (?s ido-switch-buffer)
-     ;; resize windows
-     (?d delete-window)
-     (?c jqt/split-to-compare)
-     (?1 delete-other-windows)
-     (?2 jqt/two-third-it-up)
-     (?3 jqt/split-window-into-three))))
+  (let ((map (make-sparse-keymap)))
+    (jqt/define-keys map '(;; switch windows
+                           (?f '(other-window 1))
+                           (?b '(other-window -1))
+                           ;; switch buffers
+                           (?p previous-buffer)
+                           (?n next-buffer)
+                           (?l `(switch-to-buffer ,(other-buffer)))
+                           (?j jqt/switch-to-jabber-chat-buffer)
+                           ;; (?s jqt/window-control/ido-switch-buffer)
+                           (?s ido-switch-buffer)
+                           ;; resize windows
+                           ("M-f" winner-redo)
+                           ("M-b" winner-undo)
+                           (?d delete-window)
+                           (?D `(delete-window ,(next-window)))
+                           (?c jqt/split-to-compare)
+                           (?C '(jqt/split-to-compare 1))
+                           (?1 delete-other-windows)
+                           (?2 jqt/two-third-it-up)
+                           (?3 jqt/split-window-into-three)))
+    (jqt/set-temporary-overlay-map map t)))
 
 ;;;;;;;;;;;;;;
 ;; settings ;;

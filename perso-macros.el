@@ -6,7 +6,7 @@
         ,fun)
       map) t))
 
-(defmacro repeater-map-more (keymaps)
+(defmacro repeater-map-more (keymaps &optional msg)
   "For complex maps in which multiple repeatable keys are attached to
 functions."
   `(set-temporary-overlay-map
@@ -15,9 +15,11 @@ functions."
        for (repeat-key fun) in ,keymaps
        do (define-key map (vector repeat-key)
             `(lambda () (interactive)
+               (if ,,msg
+		   (message ,,msg))
                (if (listp ',fun)
                    (apply (car ,fun) (cdr ,fun))
-                 (,fun)))))
+		 (,fun)))))
       map) t))
 
 (defmacro defun-emoticon (name ascii)
