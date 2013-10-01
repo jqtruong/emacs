@@ -15,6 +15,7 @@
 (require 'hlinum)
 (require 'undo-tree)
 (require 'winner)
+(require 'popwin)
 
 ;;;;;;;;;;;;;;
 ;; hacking! ;;
