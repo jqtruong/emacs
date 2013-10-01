@@ -30,6 +30,7 @@
 (global-undo-tree-mode 1)
 (ido-mode 1)
 (winner-mode 1)
+(popwin-mode 1)
 (column-number-mode)
 (setq lisp-indent-function 'common-lisp-indent-function)
 (eval-after-load "cl-indent"
