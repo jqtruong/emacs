@@ -29,6 +29,12 @@ functions."
      (interactive)
      (kill-new ,ascii)))
 
+(defmacro defun-copy-string (fun-name string)
+  "Creates a function with `fun-name' that puts the `string' in the kill-ring."
+  `(defun ,fun-name ()
+     ""
+     (interactive)
+     (kill-new ,string)))
 
 
 (provide 'perso-macros)

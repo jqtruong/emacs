@@ -1,3 +1,6 @@
+;;;;;;;;;;;;;
+;; require ;;
+;;;;;;;;;;;;;
 (require 'perso-ace-jump-mode)
 (require 'perso-emoticons)
 (require 'perso-eshell)
@@ -66,6 +69,28 @@
   (if msg
       (message msg))
   (repeater-map-more keymaps msg))
+
+(defun jqt/next-buffer-window-condition (buffer window func &optional switch-p)
+  (if window
+       (if (eq window (selected-window))
+           (progn
+             (bury-buffer buffer)
+             (set-window-buffer window
+                                (if (listp func)
+                                    (apply (car func) (cdr func))
+                                  (funcall func))))
+         (select-window window))
+     (if switch-p
+         (switch-to-buffer buffer)
+       (pop-to-buffer buffer))))
+
+(defun jqt/next-buffer-with-regexp (regexp &optional i)
+  "Filters buffer list for names that start with `REGEXP'."
+  (elt
+   (remove-if-not
+    (lambda (buffer) (string-match regexp (buffer-name buffer)))
+    (buffer-list))
+   (or i 0)))
 
 (defun jqt/define-keys (map keymaps)
   "Calls `DEFINE-KEY' on MAP for each pair of command and functions in
@@ -174,7 +199,6 @@ KEYMAPS."
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-e") 'end-of-visual-line)
 ;; custom
-(global-set-key (kbd "C-x F")   'ido-find-file-in-tag-files)
 (global-set-key (kbd "C-c r")   'replace-string)
 (global-set-key (kbd "C-c u")   'uncomment-region)
 (global-set-key (kbd "C-! b")   'jqt/copy-buffer-name)
@@ -188,6 +212,7 @@ KEYMAPS."
 ;; map
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)
 
-
-
+;;;;;;;;;
+;; end ;;
+;;;;;;;;;
 (provide 'perso)

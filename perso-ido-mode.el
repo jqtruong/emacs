@@ -40,4 +40,12 @@
        "Project file: " (tags-table-files) nil t)))))
 
 
+;;;;;;;;;;;;;;;;;
+;; keybindings ;;
+;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-x F") 'ido-find-file-in-tag-files)
+
+;;;;;;;;;
+;; end ;;
+;;;;;;;;;
 (provide 'perso-ido-mode)

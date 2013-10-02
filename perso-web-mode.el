@@ -16,8 +16,8 @@
 ;;;;;;;;;;;
 (add-hook 'web-mode-hook
           '(lambda ()
-             (linum-mode)
-             (hlinum-activate)))
+            (linum-mode)
+            (hlinum-activate)))
 
 ;;;;;;;;;;;
 ;; faces ;;
@@ -26,6 +26,12 @@
 (set-face-attribute 'web-mode-html-attr-name-face nil :foreground "#2075c7")
 (set-face-attribute 'web-mode-html-attr-value-face nil :foreground "#259185")
 
+;;;;;;;;;;;;;;;;;
+;; keybindings ;;
+;;;;;;;;;;;;;;;;;
+(define-key web-mode-map (kbd "C-;") nil) ; C-; personally reserved for window management.
 
-
+;;;;;;;;;
+;; end ;;
+;;;;;;;;;
 (provide 'perso-web-mode)

@@ -57,6 +57,7 @@ Caveats:
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
 
-
-
+;;;;;;;;;
+;; end ;;
+;;;;;;;;;
 (provide 'perso-jabber)

@@ -5,6 +5,38 @@
 (require 'perso-jabber)
 
 ;;;;;;;;;;;;;;;
+;; variables ;;
+;;;;;;;;;;;;;;;
+(defcustom window-control-map '(;; switch windows
+                                (?f '(other-window 1))
+                                (?b '(other-window -1))
+                                ;; switch buffers
+                                (?p previous-buffer)
+                                (?n next-buffer)
+                                (?l `(switch-to-buffer ,(other-buffer)))
+                                (?j jqt/switch-to-jabber-chat-buffer)
+                                (?s ido-switch-buffer)
+                                ;; resize windows
+                                ("M-f" winner-redo)
+                                ("M-b" winner-undo)
+                                (?d delete-window)
+                                (?D `(delete-window ,(next-window)))
+                                (?c jqt/split-to-compare)
+                                (?C '(jqt/split-to-compare 1))
+                                (?1 delete-other-windows)
+                                (?2 jqt/two-third-it-up)
+                                (?3 jqt/split-window-into-three))
+  ""
+  :type 'list
+  :group 'perso
+  :group 'windows)
+
+;;;;;;;;;;;;;;
+;; settings ;;
+;;;;;;;;;;;;;;
+(winner-mode 1)
+
+;;;;;;;;;;;;;;;
 ;; functions ;;
 ;;;;;;;;;;;;;;;
 (defun jqt/two-third-it-up ()
@@ -117,21 +149,37 @@ E.g. if NUM is 6, then returns 1.
 E.g. if NUM is -6, then returns -1"
   (/ num (abs num)))
 
+(defun jqt/switch-buffer-with-window (&optional next-window-p)
+  "Switch this window's buffer with the previous window by default, or
+the next one if `NEXT-WINDOW-P'.  It does nothing if the `OTHER-WINDOW'
+is dedicated."
+  (interactive "P")
+  (let* ((buffer (current-buffer))
+         (other-window (if next-window-p
+                           (next-window)
+                         (previous-window)))
+         (other-buffer (window-buffer other-window)))
+    (unless (window-dedicated-p other-window)
+      (switch-to-buffer other-buffer)
+      (set-window-buffer other-window buffer))))
+
 (defun jqt/window-control ()
   "Creates a temporary overlay map for one-key window control."
   (interactive)
   (let ((map (make-sparse-keymap)))
+    ;; TODO: defcustom this map.
     (jqt/define-keys map '(;; switch windows
                            (?f '(other-window 1))
                            (?b '(other-window -1))
+                           (?s jqt/switch-buffer-with-window)
                            ;; switch buffers
                            (?p previous-buffer)
                            (?n next-buffer)
                            (?l `(switch-to-buffer ,(other-buffer)))
                            (?j jqt/switch-to-jabber-chat-buffer)
-                           ;; (?s jqt/window-control/ido-switch-buffer)
-                           (?s ido-switch-buffer)
-                           ;; resize windows
+                           ;; seems redundant to have to quit the temporary overlay map after initializing buffer switch
+                           ;; (?s ido-switch-buffer)
+                           ;; window layout
                            ("M-f" winner-redo)
                            ("M-b" winner-undo)
                            (?d delete-window)
@@ -143,12 +191,8 @@ E.g. if NUM is -6, then returns -1"
                            (?3 jqt/split-window-into-three)))
     (jqt/set-temporary-overlay-map map t)))
 
-;;;;;;;;;;;;;;
-;; settings ;;
-;;;;;;;;;;;;;;
 (fset 'jqt/split-window-into-three
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 49 24 51 24 51 24 43 33554438 24 98 return 33554438 24 98 return] 0 "%d")) arg)))
-(setq winner-mode 1)
 
 ;;;;;;;;;;;
 ;; hooks ;;

@@ -1,8 +1,9 @@
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "M-m") (lambda () (interactive)
-			      (magit-status default-directory)))
+(global-set-key (kbd "M-m") 'magit-status)
 
-
+;;;;;;;;;
+;; end ;;
+;;;;;;;;;
 (provide 'perso-magit)
