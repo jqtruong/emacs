@@ -47,12 +47,8 @@ current buffer.
 Note that it's not really two thirds but the desired effect nonetheless.
 "
   (interactive)
-  (delete-other-windows)
-  (split-window-right)
-  (split-window-right)
+  (split-window-right 129)
   (switch-to-buffer (other-buffer))
-  (other-window -1)
-  (delete-window)
   (other-window 1))
 
 (defun jqt/toggle-window-dedication (&optional on)

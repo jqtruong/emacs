@@ -51,11 +51,11 @@ Optional SEPARATOR to concatenate the collected lines and return a string."
                             (point))))
          ;; Left trim each line a predefined # of chars, but skip the first line.
          (ltrimmed-lines (append (list (car lines))
-                                 (mapcar '(lambda (line)
+                                 (mapcar #'(lambda (line)
                                             (substring line chars-to-ltrim))
                                          (cdr lines))))
          ;; Substring of each string from beginning to end of line or next break.
-         (strings (mapcar '(lambda (line)
+         (strings (mapcar #'(lambda (line)
                              (jqt/string-until-next-break line))
                           ltrimmed-lines)))
     (if separator
