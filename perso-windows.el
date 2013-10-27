@@ -47,7 +47,7 @@ current buffer.
 Note that it's not really two thirds but the desired effect nonetheless.
 "
   (interactive)
-  (split-window-right 129)
+  (split-window-right 125)
   (switch-to-buffer (other-buffer))
   (other-window 1))
 
@@ -176,8 +176,8 @@ is dedicated."
                            ;; seems redundant to have to quit the temporary overlay map after initializing buffer switch
                            ;; (?s ido-switch-buffer)
                            ;; window layout
-                           ("M-f" winner-redo)
-                           ("M-b" winner-undo)
+                           (?> winner-redo)
+                           (?< winner-undo)
                            (?d delete-window)
                            (?D `(delete-window ,(next-window)))
                            (?c jqt/split-to-compare)

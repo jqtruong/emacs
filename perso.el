@@ -17,9 +17,11 @@
 
 (require 'helm)
 (require 'hlinum)
+(require 'idle-highlight-mode)
+(require 'popwin)
+(require 'starter-kit-defuns)
 (require 'undo-tree)
 (require 'winner)
-(require 'popwin)
 
 ;;;;;;;;;;;;;;
 ;; hacking! ;;
@@ -42,6 +44,44 @@
   '(progn
      (put 'cl-flet 'common-lisp-indent-function 
           (get 'flet 'common-lisp-indent-function))))
+
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t)))
+;; add additional languages with '((language . t)))
+
+;;;;;;;;;;;
+;; hooks ;;
+;;;;;;;;;;;
+;; These starter-kit cool things mess up web-mode
+;; https://github.com/fxbois/web-mode/issues/117
+(remove-hook 'prog-mode-hook 'esk-pretty-lambdas)
+(remove-hook 'prog-mode-hook 'esk-add-watchwords)
+(remove-hook 'prog-mode-hook 'idle-highlight-mode)
+
+;; TODO move to perso-lisp or something
+(add-hook 'lisp-mode-hook '(lambda ()
+                            (esk-pretty-lambdas)
+                            (esk-add-watchwords)
+                            (idle-highlight-mode)))
+(add-hook 'emacs-lisp-mode-hook '(lambda ()
+                                  (esk-pretty-lambdas)
+                                  (esk-add-watchwords)
+                                  (idle-highlight-mode)))
+
+(add-hook 'sql-mode-hook
+          (lambda ()
+            (sql-highlight-mysql-keywords)))
+
+;;;;;;;;;;;;;
+;; advices ;;
+;;;;;;;;;;;;;
+(defadvice find-file (after rename-org-buffer-to-parent-directory activate)
+  ""
+  (when (string= ".org" (buffer-name))
+    (let ((path (split-string (buffer-file-name) "/")))
+      (rename-buffer (format "%s.org" (car (last path 2)))))))
 
 ;;;;;;;;;;;;;;;
 ;; functions ;;
@@ -196,10 +236,11 @@ KEYMAPS."
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
 ;; overrides
-(global-set-key (kbd "C-s")   'isearch-forward-regexp)
-(global-set-key (kbd "C-r")   'isearch-backward-regexp)
-(global-set-key (kbd "C-e")   'end-of-visual-line)
-(global-set-key (kbd "C-x b") 'helm-for-files)
+(global-set-key (kbd "C-s")     'isearch-forward-regexp)
+(global-set-key (kbd "C-r")     'isearch-backward-regexp)
+(global-set-key (kbd "C-e")     'end-of-visual-line)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b")   'helm-for-files)
 ;; custom
 (global-set-key (kbd "C-c r") 'replace-string)
 (global-set-key (kbd "C-c u") 'uncomment-region)
