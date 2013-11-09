@@ -16,6 +16,7 @@
 (require 'perso-windows)
 
 (require 'helm)
+(require 'linum)
 (require 'hlinum)
 (require 'idle-highlight-mode)
 (require 'popwin)
@@ -59,6 +60,11 @@
 (remove-hook 'prog-mode-hook 'esk-pretty-lambdas)
 (remove-hook 'prog-mode-hook 'esk-add-watchwords)
 (remove-hook 'prog-mode-hook 'idle-highlight-mode)
+
+;; instead, i prefer linum-mode hlinum combo
+(add-hook 'prog-mode-hook '(lambda ()
+                            (linum-mode)
+                            (hlinum-activate)))
 
 ;; TODO move to perso-lisp or something
 (add-hook 'lisp-mode-hook '(lambda ()
@@ -160,22 +166,22 @@ KEYMAPS."
   (let* ((map-off (make-sparse-keymap))
          (starter-key (event-basic-type last-input-event))
          (starter-key-sym
-          (make-symbol (concat "start-map-with-key-"
-                               `(,starter-key))))
+          (intern (concat "start-map-with-key-"
+                               (number-to-string starter-key))))
          (end-key-sym
-          (make-symbol (concat "end-map-with-key-"
-                               `(,starter-key))))
+          (intern (concat "end-map-with-key-"
+                               (number-to-string starter-key))))
          (cursor-color (cdr (assoc 'cursor-color (frame-parameters (selected-frame)))))
          (find-alist-on-sym
-          (make-symbol "jqt/set-temporary-overlay-map/find-alist-on"))
+          (intern "jqt/set-temporary-overlay-map/find-alist-on"))
          (find-alist-on
           `(lambda (alist) (assoc ',starter-key-sym alist)))
          (find-alist-off-sym
-          (make-symbol "jqt/set-temporary-overlay-map/find-alist-off"))
+          (intern "jqt/set-temporary-overlay-map/find-alist-off"))
          (find-alist-off
           `(lambda (alist) (assoc ',end-key-sym alist)))
          (remove-alists-sym
-          (make-symbol
+          (intern
            "jqt/set-temporary-overlay-map/remove-alists"))
          (remove-alists
           `(lambda ()
@@ -212,6 +218,7 @@ KEYMAPS."
     (fset remove-alists-sym remove-alists)
     (fset clearfunsym clearfun)
     (add-hook 'pre-command-hook clearfunsym)
+    ;; TODO customize that color
     (set-cursor-color "red")
     (jqt/define-keys map-off `((,starter-key ,remove-alists-sym)))
     (let ((alist-on (list (cons starter-key-sym map-on)))

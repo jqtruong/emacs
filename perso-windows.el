@@ -31,6 +31,9 @@
   :group 'perso
   :group 'windows)
 
+(defvar jqt/window-control-p nil
+  "")
+
 ;;;;;;;;;;;;;;
 ;; settings ;;
 ;;;;;;;;;;;;;;
@@ -47,8 +50,12 @@ current buffer.
 Note that it's not really two thirds but the desired effect nonetheless.
 "
   (interactive)
-  (split-window-right 125)
-  (switch-to-buffer (other-buffer))
+  (split-window-right)
+  (split-window-right)
+  (balance-windows)
+  (other-window 2)
+  (delete-window)
+  (set-window-buffer (selected-window) (other-buffer))
   (other-window 1))
 
 (defun jqt/toggle-window-dedication (&optional on)
@@ -162,6 +169,7 @@ is dedicated."
 (defun jqt/window-control ()
   "Creates a temporary overlay map for one-key window control."
   (interactive)
+  (setq jqt/window-control-p t)
   (let ((map (make-sparse-keymap)))
     ;; TODO: defcustom this map.
     (jqt/define-keys map '(;; switch windows
@@ -173,8 +181,6 @@ is dedicated."
                            (?n next-buffer)
                            (?l `(switch-to-buffer ,(other-buffer)))
                            (?j jqt/switch-to-jabber-chat-buffer)
-                           ;; seems redundant to have to quit the temporary overlay map after initializing buffer switch
-                           ;; (?s ido-switch-buffer)
                            ;; window layout
                            (?> winner-redo)
                            (?< winner-undo)
@@ -189,6 +195,14 @@ is dedicated."
 
 (fset 'jqt/split-window-into-three
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 49 24 51 24 51 24 43 33554438 24 98 return 33554438 24 98 return] 0 "%d")) arg)))
+
+;;;;;;;;;;;;;
+;; advices ;;
+;;;;;;;;;;;;;
+(defadvice helm-for-files (before remember-window-control activate)
+  (when jqt/window-control-p
+    ;; (jqt/set-temporary-overlay-map/remove-alists)
+    ))
 
 ;;;;;;;;;;;
 ;; hooks ;;
@@ -207,9 +221,6 @@ is dedicated."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; windows
 (global-set-key (kbd "C-;")     'jqt/window-control)
-;; frames                       
-(global-set-key (kbd "C-. o")   'jqt/other-frame-or-create)
-(global-set-key (kbd "C-. k")   'jqt/kill-other-frame)
 
 
 
