@@ -220,7 +220,7 @@ is dedicated."
 ;; - . for frames           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; windows
-(global-set-key (kbd "C-;")     'jqt/window-control)
+;; (global-set-key (kbd "C-;")     'jqt/window-control)
 
 
 

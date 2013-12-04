@@ -234,6 +234,51 @@ KEYMAPS."
   (interactive)
   (setq face-remapping-alist nil))
 
+(defun perso/search-thing-at-point (&optional backward-p)
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol)))
+    (if backward-p
+        (search-backward symbol nil t)
+        (search-forward symbol nil t))))
+
+(defcustom perso/regexp/def "(\\(def[^ ]+\\) \\(?1:[^ ]+\\)"
+  "Elisp `def'initions.")
+
+(defun perso/previous-def ()
+  (interactive)
+  (re-search-backward perso/regexp/def nil t)
+  (goto-char (match-beginning 1)))
+
+(defun perso/next-def ()
+  (interactive)
+  (re-search-forward perso/regexp/def nil t)
+  (goto-char (match-beginning 1)))
+
+(defun perso/define-key-helper/string-or-char (key)
+  (if (stringp key)
+      (kbd key)
+      (if (characterp key)
+          (vector key)
+          nil)))
+
+(defun perso/build-keymap (keybindings)
+  "i was hoping there would be a way to dynamically build the keymap 
+but `define-minor-mode' is macro that statically sets the map or at
+least just once... until i know more about how that macro works and
+wrap it or create my own since it does do something like 
+`set-temporary-overlay-map'
+
+the keybindings are already customizable but the minor-modes
+will have to be re- evaluated to re- build the keymap and so is 
+customizingly useless"
+  (interactive)
+  (let ((map (make-sparse-keymap)))
+    (loop for keybinding in keybindings
+       for (key . function) = keybinding
+       for key = (perso/define-key-helper/string-or-char key)
+       do (define-key map key `,function))
+    map))
+
 ;;;;;;;;;;;
 ;; modes ;;
 ;;;;;;;;;;;
