@@ -66,11 +66,6 @@ Note that it's not really two thirds but the desired effect nonetheless.
     (set-window-dedicated-p (selected-window) (not (window-dedicated-p (selected-window)))))
   (message "Dedicated? %s" (window-dedicated-p (selected-window))))
 
-(defun jqt/flip-windows-buffers ()
-  "Move each window's buffer to the next available window."
-  (interactive)
-  ())
-
 (defun jqt/split-to-compare (&optional below)
   "Split current window to compare last two buffers.
 
@@ -195,6 +190,22 @@ is dedicated."
 
 (fset 'jqt/split-window-into-three
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 49 24 51 24 51 24 43 33554438 24 98 return 33554438 24 98 return] 0 "%d")) arg)))
+
+(defun perso/windows/lickity-split (&optional delta)
+  (interactive "P")
+  (let ((delta (or delta 10)))
+    (split-window-below)
+    (enlarge-window delta)
+    (split-window-right)
+    (set-window-buffer (next-window) (other-buffer))
+    (set-window-buffer (next-window (next-window)) (other-buffer))))
+
+(defun perso/windows/cycle ()
+  (interactive)
+  (jqt/switch-buffer-with-window)
+  (other-window 1)
+  (jqt/switch-buffer-with-window)
+  (other-window 1))
 
 ;;;;;;;;;;;;;
 ;; advices ;;
