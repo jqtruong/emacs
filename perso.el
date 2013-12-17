@@ -293,18 +293,22 @@ customizingly useless"
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-x b")   'helm-for-files)
 ;; custom
-(global-set-key (kbd "C-c r") 'replace-string)
-(global-set-key (kbd "C-c u") 'uncomment-region)
-(global-set-key (kbd "C-! b") 'jqt/copy-buffer-name)
-(global-set-key (kbd "C-! t") 'jqt/insert-current-date-time)
-(global-set-key (kbd "C-! s") 'jqt/insert-seconds-from-date)
-(global-set-key (kbd "C-@")   'browse-url)
-(global-set-key (kbd "M-? t") 'jqt/convert-from-unix-timestamp)
-(global-set-key (kbd "M-? p") 'jqt/point)
-(global-set-key (kbd "M-.")   'etags-select-find-tag)
-(global-set-key (kbd "M-Y")   'yank-pop-forwards)
+(global-set-key (kbd "C-c r")      'replace-string)
+(global-set-key (kbd "C-c u")      'uncomment-region)
+(global-set-key (kbd "C-! b")      'jqt/copy-buffer-name)
+(global-set-key (kbd "C-! t")      'jqt/insert-current-date-time)
+(global-set-key (kbd "C-! s")      'jqt/insert-seconds-from-date)
+(global-set-key (kbd "C-@")        'browse-url)
+(global-set-key (kbd "M-? t")      'jqt/convert-from-unix-timestamp)
+(global-set-key (kbd "M-? p")      'jqt/point)
+(global-set-key (kbd "M-.")        'etags-select-find-tag)
+(global-set-key (kbd "M-Y")        'yank-pop-forwards)
+(global-set-key (kbd "C-<return>") 'repeat)
+
 ;; map
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)
+(define-key emacs-lisp-mode-map (kbd "M-p") 'perso/previous-def)
+(define-key emacs-lisp-mode-map (kbd "M-n") 'perso/next-def)
 
 ;;;;;;;;;
 ;; end ;;
