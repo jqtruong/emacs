@@ -7,6 +7,7 @@
 (require 'perso-ibuffer)
 (require 'perso-ido-mode)
 (require 'perso-jabber)
+(require 'perso-lua)
 (require 'perso-macros)
 (require 'perso-magit)
 (require 'perso-misc)
@@ -19,7 +20,6 @@
 (require 'linum)
 (require 'hlinum)
 (require 'idle-highlight-mode)
-(require 'popwin)
 (require 'starter-kit-defuns)
 (require 'undo-tree)
 (require 'winner)
@@ -38,7 +38,6 @@
 (global-undo-tree-mode 1)
 (ido-mode 1)
 (winner-mode 1)
-(popwin-mode 1)
 (column-number-mode)
 (setq lisp-indent-function 'common-lisp-indent-function)
 (eval-after-load "cl-indent"
