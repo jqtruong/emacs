@@ -25,16 +25,11 @@
          ("elisp" (mode . emacs-lisp-mode))
          ("Org" (name . "\\.org$"))
          ("shells" (name . "\\*eshell\\*"))
-         ("magit" (name . "^\\*magit\\(: \\|-\\).*\\*$"))
-         ("webapp_bloomhealth" (filename . "git/webapp_bloomhealth"))
-         ("bloomhealth" (filename . "git/bloomhealth"))
-         ("lib_domain" (filename . "git/lib_domain")))))
+         ("magit" (name . "^\\*magit\\(: \\|-\\).*\\*$")))))
 
 (add-hook 'ibuffer-mode-hook '(lambda ()
-                                (ibuffer-auto-mode 1)
-                                (ibuffer-switch-to-saved-filter-groups "default")
-                                (when (bound-and-true-p ide-mode-p)
-                                  (set-window-parameter (selected-window) 'no-other-window t))))
+                               (ibuffer-auto-mode 1)
+                               (ibuffer-switch-to-saved-filter-groups "default")))
 
 (setq ibuffer-formats
       '((mark modified read-only " "

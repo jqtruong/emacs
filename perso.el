@@ -16,10 +16,12 @@
 (require 'perso-web-mode)
 (require 'perso-windows)
 
+(require 'expand-region)
 (require 'helm)
 (require 'linum)
 (require 'hlinum)
 (require 'idle-highlight-mode)
+(require 'js)
 (require 'starter-kit-defuns)
 (require 'undo-tree)
 (require 'winner)
@@ -260,6 +262,19 @@ KEYMAPS."
           (vector key)
           nil)))
 
+(defcustom perso/regexp/js/function "function\\( *\\|[^(]*\\)([^)]*)\\|\\bangular\\."
+  "Javascript functions and Angular method calls.")
+
+(defun perso/js/previous-function ()
+  (interactive)
+  (re-search-backward perso/regexp/js/function nil t)
+  (goto-char (match-beginning 1)))
+
+(defun perso/js/next-function ()
+  (interactive)
+  (re-search-forward perso/regexp/js/function nil t)
+  (goto-char (match-beginning 1)))
+
 (defun perso/build-keymap (keybindings)
   "i was hoping there would be a way to dynamically build the keymap 
 but `define-minor-mode' is macro that statically sets the map or at
@@ -287,14 +302,27 @@ customizingly useless"
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
 ;; overrides
-(global-set-key (kbd "C-s")     'isearch-forward-regexp)
-(global-set-key (kbd "C-r")     'isearch-backward-regexp)
-(global-set-key (kbd "C-e")     'end-of-visual-line)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b")   'helm-for-files)
+(global-set-key (kbd "C-s")       'isearch-forward-regexp)
+(global-set-key (kbd "C-r")       'isearch-backward-regexp)
+(global-set-key (kbd "C-e")       'end-of-visual-line)
+(global-set-key (kbd "C-x C-f")   'ido-find-file)
+(global-set-key (kbd "C-x C-S-f") 'helm-etags-select)
+(global-set-key (kbd "C-x b")     'ido-switch-buffer)
+(global-set-key (kbd "C-x C-b")   'helm-for-files)
+(global-set-key (kbd "C-x C-o")   (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-x 2")     (lambda () (interactive)
+                                     (split-window-vertically)
+                                     (other-window 1)))
+(global-set-key (kbd "C-x 3")     (lambda () (interactive)
+                                     (split-window-horizontally)
+                                     (other-window 1)))
+
 ;; custom
-(global-set-key (kbd "C-c r")      'replace-string)
-(global-set-key (kbd "C-c u")      'uncomment-region)
+(global-unset-key (kbd "C-c r"))
+(global-set-key (kbd "C-c r r")    'replace-string)
+(global-set-key (kbd "C-c r c")    'comment-region)
+(global-set-key (kbd "C-c r u")    'uncomment-region)
+(global-set-key (kbd "C-c r e")    'er/expand-region)
 (global-set-key (kbd "C-! b")      'jqt/copy-buffer-name)
 (global-set-key (kbd "C-! t")      'jqt/insert-current-date-time)
 (global-set-key (kbd "C-! s")      'jqt/insert-seconds-from-date)
@@ -303,12 +331,18 @@ customizingly useless"
 (global-set-key (kbd "M-? p")      'jqt/point)
 (global-set-key (kbd "M-.")        'etags-select-find-tag)
 (global-set-key (kbd "M-Y")        'yank-pop-forwards)
-(global-set-key (kbd "C-<return>") 'repeat)
+(global-set-key (kbd "C-z")        'repeat)
+(global-set-key (kbd "C-c w u")    'winner-undo)
+(global-set-key (kbd "C-c w r")    'winner-redo)
 
 ;; map
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)
 (define-key emacs-lisp-mode-map (kbd "M-p") 'perso/previous-def)
 (define-key emacs-lisp-mode-map (kbd "M-n") 'perso/next-def)
+(define-key emacs-lisp-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
+(define-key lisp-interaction-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
+(define-key js-mode-map (kbd "M-p") 'perso/js/previous-function)
+(define-key js-mode-map (kbd "M-n") 'perso/js/next-function)
 
 ;;;;;;;;;
 ;; end ;;

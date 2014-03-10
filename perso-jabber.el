@@ -11,7 +11,7 @@
       '(("jerometruong@gmail.com"
          (:password . nil)
          (:network-server . "talk.google.com")
-         (:port . 443)
+         (:port . 5223)
          (:connection-type . ssl))))
 
 ;;;;;;;;;;;;;;;

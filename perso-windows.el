@@ -66,12 +66,12 @@ Note that it's not really two thirds but the desired effect nonetheless.
     (set-window-dedicated-p (selected-window) (not (window-dedicated-p (selected-window)))))
   (message "Dedicated? %s" (window-dedicated-p (selected-window))))
 
-(defun jqt/split-to-compare (&optional below)
+(defun jqt/split-to-compare (&optional belowp)
   "Split current window to compare last two buffers.
 
-If OTHER is nil, stay in current window, else..."
+TODO If OTHER is nil, stay in current window, else..."
   (interactive "P P")
-  (if below
+  (if belowp
       (split-window-below)
     (split-window-right))
   (other-window 1)
@@ -171,11 +171,18 @@ is dedicated."
                            (?f '(other-window 1))
                            (?b '(other-window -1))
                            (?s jqt/switch-buffer-with-window)
+                           ;; TODO missing register ("r w" window-configuration-to-register)
+                           ;; TODO ("r j" jump-to-register)
                            ;; switch buffers
+                           
+                           ;; TODO move these to their own buffer map
+                           ;; so keys can be reused.
                            (?p previous-buffer)
                            (?n next-buffer)
                            (?l `(switch-to-buffer ,(other-buffer)))
                            (?j jqt/switch-to-jabber-chat-buffer)
+                           (?J '(jqt/switch-to-jabber-chat-buffer 1))
+                           
                            ;; window layout
                            (?> winner-redo)
                            (?< winner-undo)
@@ -184,8 +191,10 @@ is dedicated."
                            (?c jqt/split-to-compare)
                            (?C '(jqt/split-to-compare 1))
                            (?1 delete-other-windows)
-                           (?2 jqt/two-third-it-up)
-                           (?3 jqt/split-window-into-three)))
+                           (?2 split-window-below)
+                           (?@ '(jqt/split-to-compare 1))
+                           (?3 split-window-right)
+                           (?# perso/windows/lickity-split)))
     (jqt/set-temporary-overlay-map map t)))
 
 (fset 'jqt/split-window-into-three
@@ -193,7 +202,8 @@ is dedicated."
 
 (defun perso/windows/lickity-split (&optional delta)
   (interactive "P")
-  (let ((delta (or delta 10)))
+  (delete-other-windows)
+  (let ((delta (or delta 20)))
     (split-window-below)
     (enlarge-window delta)
     (split-window-right)
@@ -207,20 +217,28 @@ is dedicated."
   (jqt/switch-buffer-with-window)
   (other-window 1))
 
+(defun perso/windows/popup-last-buffer-with-regexp (regexp &optional height)
+  "Create a new window with the last buffer matching `REGEXP'.
+
+New window spans the frame's width and is set to `HEIGHT' or a
+third of the frame's height by default."
+  (interactive "sRegexp: \ndDelta: ")
+  ;; make the window arrangements
+  (switch-to-buffer (jqt/next-buffer-with-regexp regexp)))
+
+(defun perso/windows/popup-last-org ()
+  (interactive)
+  (perso/popup-last-buffer-with-regexp "\\.org$"))
+
 ;;;;;;;;;;;;;
 ;; advices ;;
 ;;;;;;;;;;;;;
-(defadvice helm-for-files (before remember-window-control activate)
-  (when jqt/window-control-p
-    ;; (jqt/set-temporary-overlay-map/remove-alists)
-    ))
+
 
 ;;;;;;;;;;;
 ;; hooks ;;
 ;;;;;;;;;;;
-(add-hook 'org-mode-hook
-          '(lambda ()
-             (define-key org-mode-map [(control tab)] nil)))
+
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
@@ -231,7 +249,7 @@ is dedicated."
 ;; - . for frames           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; windows
-;; (global-set-key (kbd "C-;")     'jqt/window-control)
+(global-set-key (kbd "C-;")     'jqt/window-control)
 
 
 

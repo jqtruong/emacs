@@ -105,8 +105,11 @@ Added to eshell-output-filter-functions through customization."
 ;;;;;;;;;;;;;;
 ;; env vars ;; because eshell doesn't read my .bashrc/.profile
 ;;;;;;;;;;;;;;
+(setenv "JAVA_HOME" "/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home")
 (setenv "GRAILS_OPTS" "-Xms2g -Xmx2g -XX:PermSize=128m -XX:MaxPermSize=1024m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -server")
 (setenv "JAVA_OPTS" "-Djava.awt.headless=true -Xms1G -Xmx1G -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC")
+(setenv "VAGRANTMANAGER_CPU" "3")
+(setenv "VAGRANTMANAGER_MEM" "6500")
 
 
 

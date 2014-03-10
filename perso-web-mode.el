@@ -19,7 +19,9 @@
           '(lambda ()
             (linum-mode)
             (hlinum-activate)
-            (hl-line-mode -1)))
+            ;; possibly fixed after web-mode update
+            ;; (hl-line-mode -1)
+            ))
 
 ;;;;;;;;;;;
 ;; faces ;;
