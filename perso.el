@@ -1,3 +1,19 @@
+;;;;;;;;;;;;;;
+;; packages ;;
+;;;;;;;;;;;;;;
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+(defvar my-packages '(ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode clojure-test-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitconfig-mode github-browse-file gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode magit-commit-training-wheels magit-gh-pulls gh logito magit-push-remote mongo multiple-cursors neotree nodejs-repl nrepl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete shell-switcher show-css dom starter-kit-bindings starter-kit-eshell starter-kit-lisp elisp-slime-nav starter-kit magit git-rebase-mode git-commit-mode ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode))
+
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
 ;;;;;;;;;;;;;
 ;; require ;;
 ;;;;;;;;;;;;;
