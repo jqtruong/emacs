@@ -3,13 +3,15 @@
 ;;;;;;;;;;;;;
 (require 'jabber)
 (require 'jabber-autoloads)
+(require 'netrc)
 
 ;;;;;;;;;;;;;;
 ;; settings ;;
 ;;;;;;;;;;;;;;
+(setq cred (netrc-machine (netrc-parse "~/.authinfo") "jabber" t))
 (setq jabber-account-list
-      '(("jerometruong@gmail.com"
-         (:password . nil)
+      `(("jerometruong@gmail.com"
+         (:password . ,(netrc-get cred "password"))
          (:network-server . "talk.google.com")
          (:port . 5223)
          (:connection-type . ssl))))

@@ -7,21 +7,25 @@
 (require 'perso-ibuffer)
 (require 'perso-ido-mode)
 (require 'perso-jabber)
+(require 'perso-js)
 (require 'perso-lua)
 (require 'perso-macros)
 (require 'perso-magit)
 (require 'perso-misc)
 (require 'perso-multiple-cursors)
 (require 'perso-paredit)
+(require 'perso-racket)
 (require 'perso-web-mode)
 (require 'perso-windows)
 
+(require 'auto-dim-other-buffers)
+(require 'bs)
 (require 'expand-region)
 (require 'helm)
 (require 'linum)
+(require 'highlight-parentheses)
 (require 'hlinum)
 (require 'idle-highlight-mode)
-(require 'js)
 (require 'starter-kit-defuns)
 (require 'undo-tree)
 (require 'winner)
@@ -46,6 +50,7 @@
   '(progn
      (put 'cl-flet 'common-lisp-indent-function 
           (get 'flet 'common-lisp-indent-function))))
+(auto-dim-other-buffers-mode 1)
 
 ;; active Babel languages
 (org-babel-do-load-languages
@@ -73,6 +78,7 @@
                             (esk-add-watchwords)
                             (idle-highlight-mode)))
 (add-hook 'emacs-lisp-mode-hook '(lambda ()
+                                  (highlight-parentheses-mode 1)
                                   (esk-pretty-lambdas)
                                   (esk-add-watchwords)
                                   (idle-highlight-mode)))
@@ -262,19 +268,6 @@ KEYMAPS."
           (vector key)
           nil)))
 
-(defcustom perso/regexp/js/function "function\\( *\\|[^(]*\\)([^)]*)\\|\\bangular\\."
-  "Javascript functions and Angular method calls.")
-
-(defun perso/js/previous-function ()
-  (interactive)
-  (re-search-backward perso/regexp/js/function nil t)
-  (goto-char (match-beginning 1)))
-
-(defun perso/js/next-function ()
-  (interactive)
-  (re-search-forward perso/regexp/js/function nil t)
-  (goto-char (match-beginning 1)))
-
 (defun perso/build-keymap (keybindings)
   "i was hoping there would be a way to dynamically build the keymap 
 but `define-minor-mode' is macro that statically sets the map or at
@@ -308,6 +301,7 @@ customizingly useless"
 (global-set-key (kbd "C-x C-f")   'ido-find-file)
 (global-set-key (kbd "C-x C-S-f") 'helm-etags-select)
 (global-set-key (kbd "C-x b")     'ido-switch-buffer)
+(global-set-key (kbd "C-x B")     'bs-show)
 (global-set-key (kbd "C-x C-b")   'helm-for-files)
 (global-set-key (kbd "C-x C-o")   (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-x 2")     (lambda () (interactive)
@@ -341,8 +335,6 @@ customizingly useless"
 (define-key emacs-lisp-mode-map (kbd "M-n") 'perso/next-def)
 (define-key emacs-lisp-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
 (define-key lisp-interaction-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
-(define-key js-mode-map (kbd "M-p") 'perso/js/previous-function)
-(define-key js-mode-map (kbd "M-n") 'perso/js/next-function)
 
 ;;;;;;;;;
 ;; end ;;
