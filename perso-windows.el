@@ -182,6 +182,8 @@ is dedicated."
                            (?l `(switch-to-buffer ,(other-buffer)))
                            (?j jqt/switch-to-jabber-chat-buffer)
                            (?J '(jqt/switch-to-jabber-chat-buffer 1))
+                           (?P perso/narrow-to-previous-sentence)
+                           (?N perso/narrow-to-next-sentence)
                            
                            ;; window layout
                            (?> winner-redo)
@@ -230,6 +232,32 @@ third of the frame's height by default."
   (interactive)
   (perso/popup-last-buffer-with-regexp "\\.org$"))
 
+(defcustom perso/regexp/puncs
+  "[\.,;]"
+  "Punctuations"
+  :group 'text)
+
+(defun perso/narrow-to-sentence (func)
+  (widen)
+  (let ((start (point)))
+    (cond
+      ((eq func 'prev)
+       (re-search-backward perso/regexp/puncs nil t 2)
+       (goto-char (1+ (point))))
+      ((eq func 'next) (re-search-forward perso/regexp/puncs nil t)))
+    (narrow-to-region start (point))))
+
+(defun perso/narrow-to-previous-sentence ()
+  (interactive)
+  (perso/narrow-to-sentence 'prev))
+
+(defun perso/narrow-to-next-sentence ()
+  (interactive)
+  (perso/narrow-to-sentence 'next))
+
+;; (fset 'perso/narrow-next-sentence
+;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 110 119 67108896 19 91 91 58 112 117 110 99 116 93 backspace 58 93 93 24 110 110 67108896 67108896] 0 "%d")) arg)))
+
 ;;;;;;;;;;;;;
 ;; advices ;;
 ;;;;;;;;;;;;;
@@ -249,7 +277,7 @@ third of the frame's height by default."
 ;; - . for frames           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; windows
-(global-set-key (kbd "C-;")     'jqt/window-control)
+(global-set-key (kbd "C-M-;")     'jqt/window-control)
 
 
 

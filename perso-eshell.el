@@ -1,6 +1,7 @@
 ;;;;;;;;;;;;;
 ;; require ;;
 ;;;;;;;;;;;;;
+(require 'em-tramp)
 (require 'shell-switcher)
 
 ;;;;;;;;;;;;;;;

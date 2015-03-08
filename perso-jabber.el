@@ -2,7 +2,6 @@
 ;; require ;;
 ;;;;;;;;;;;;;
 (require 'jabber)
-(require 'jabber-autoloads)
 (require 'netrc)
 
 ;;;;;;;;;;;;;;
@@ -64,12 +63,12 @@ Caveats:
 ;;;;;;;;;;;;;;;;;
 ;;; overrides
 ;;; default key C-x C-j is stolen by dired-jump
-(global-set-key (kbd "C-x j c") 'jabber-connect-all)
-(global-set-key (kbd "C-x j d") 'jabber-disconnect)
-(global-set-key (kbd "C-x j r") 'perso/jabber/display-roster)
+(global-set-key (kbd "C-c j c") 'jabber-connect-all)
+(global-set-key (kbd "C-c j d") 'jabber-disconnect)
+(global-set-key (kbd "C-c j r") 'perso/jabber/display-roster)
 ;;; custom
-(global-set-key (kbd "C-x j j") 'jqt/switch-to-jabber-chat-buffer)
-(global-set-key (kbd "C-x j J") (lambda () (interactive) (jqt/switch-to-jabber-chat-buffer 1)))
+(global-set-key (kbd "C-c j j") 'jqt/switch-to-jabber-chat-buffer)
+(global-set-key (kbd "C-c j J") (lambda () (interactive) (jqt/switch-to-jabber-chat-buffer 1)))
 
 
 ;;;;;;;;;

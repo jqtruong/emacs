@@ -12,7 +12,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(defvar my-packages '(ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode clojure-test-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitconfig-mode github-browse-file gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode magit-commit-training-wheels magit-gh-pulls gh logito magit-push-remote mongo multiple-cursors neotree nodejs-repl nrepl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete shell-switcher show-css dom starter-kit-bindings starter-kit-eshell starter-kit-lisp elisp-slime-nav starter-kit magit git-rebase-mode git-commit-mode ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode))
+(defvar my-packages '(names ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitconfig-mode github-browse-file gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode magit-commit-training-wheels magit-gh-pulls gh logito magit-push-remote mongo multiple-cursors neotree nodejs-repl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete show-css dom starter-kit-bindings starter-kit-eshell starter-kit-lisp elisp-slime-nav starter-kit magit git-rebase-mode git-commit-mode ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode shell-switcher))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -38,6 +38,7 @@
 (require 'perso-web-mode)
 (require 'perso-windows)
 
+(require 'ag)
 (require 'auto-dim-other-buffers)
 (require 'bs)
 (require 'expand-region)
@@ -102,7 +103,8 @@
                                   (esk-pretty-lambdas)
                                   (esk-add-watchwords)
                                   (idle-highlight-mode)))
-
+(add-hook 'clojure-mode-hook '(lambda ()
+                               (highlight-parentheses-mode 1)))
 (add-hook 'sql-mode-hook
           (lambda ()
             (sql-highlight-mysql-keywords)))
@@ -317,6 +319,7 @@ customizingly useless"
 ;; overrides
 (global-set-key (kbd "C-s")       'isearch-forward-regexp)
 (global-set-key (kbd "C-r")       'isearch-backward-regexp)
+(global-set-key (kbd "C-S-s")     'ag)
 (global-set-key (kbd "C-e")       'end-of-visual-line)
 (global-set-key (kbd "C-x C-f")   'ido-find-file)
 (global-set-key (kbd "C-x C-S-f") 'helm-etags-select)
@@ -333,21 +336,21 @@ customizingly useless"
 
 ;; custom
 (global-unset-key (kbd "C-c r"))
-(global-set-key (kbd "C-c r r")    'replace-string)
-(global-set-key (kbd "C-c r c")    'comment-region)
-(global-set-key (kbd "C-c r u")    'uncomment-region)
-(global-set-key (kbd "C-c r e")    'er/expand-region)
-(global-set-key (kbd "C-! b")      'jqt/copy-buffer-name)
-(global-set-key (kbd "C-! t")      'jqt/insert-current-date-time)
-(global-set-key (kbd "C-! s")      'jqt/insert-seconds-from-date)
-(global-set-key (kbd "C-@")        'browse-url)
-(global-set-key (kbd "M-? t")      'jqt/convert-from-unix-timestamp)
-(global-set-key (kbd "M-? p")      'jqt/point)
-(global-set-key (kbd "M-.")        'etags-select-find-tag)
-(global-set-key (kbd "M-Y")        'yank-pop-forwards)
-(global-set-key (kbd "C-z")        'repeat)
-(global-set-key (kbd "C-c w u")    'winner-undo)
-(global-set-key (kbd "C-c w r")    'winner-redo)
+(global-set-key (kbd "C-c r r")     'replace-string)
+(global-set-key (kbd "C-c r c")     'comment-region)
+(global-set-key (kbd "C-c r u")     'uncomment-region)
+(global-set-key (kbd "C-c r e")     'er/expand-region)
+(global-set-key (kbd "C-! b")       'jqt/copy-buffer-name)
+(global-set-key (kbd "C-! t")       'jqt/insert-current-date-time)
+(global-set-key (kbd "C-! s")       'jqt/insert-seconds-from-date)
+(global-set-key (kbd "C-@")         'browse-url)
+(global-set-key (kbd "M-? t")       'jqt/convert-from-unix-timestamp)
+(global-set-key (kbd "M-? p")       'jqt/point)
+(global-set-key (kbd "M-.")         'etags-select-find-tag)
+(global-set-key (kbd "M-Y")         'yank-pop-forwards)
+(global-set-key (kbd "C-z")         'repeat)
+(global-set-key (kbd "C-c w u")     'winner-undo)
+(global-set-key (kbd "C-c w r")     'winner-redo)
 
 ;; map
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)

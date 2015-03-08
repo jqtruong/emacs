@@ -34,12 +34,12 @@
 (defun perso/js/angular/previous-construct ()
   (interactive)
   (re-search-backward perso/regexp/js/angular-constructs nil t)
-  (goto-char (match-beginning 1))))
+  (goto-char (match-beginning 1)))
 
 (defun perso/js/angular/next-construct ()
   (interactive)
   (re-search-forward perso/regexp/js/angular-constructs nil t)
-  (goto-char (match-beginning 1))))
+  (goto-char (match-beginning 1)))
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
