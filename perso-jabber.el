@@ -2,7 +2,6 @@
 ;; require ;;
 ;;;;;;;;;;;;;
 (require 'jabber)
-;; (require 'jabber-autoloads)
 (require 'netrc)
 
 ;;;;;;;;;;;;;;
