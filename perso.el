@@ -104,7 +104,8 @@
                                   (esk-pretty-lambdas)
                                   (esk-add-watchwords)
                                   (idle-highlight-mode)))
-
+(add-hook 'clojure-mode-hook '(lambda ()
+                               (highlight-parentheses-mode 1)))
 (add-hook 'sql-mode-hook
           (lambda ()
             (sql-highlight-mysql-keywords)))
@@ -325,6 +326,7 @@ customizingly useless"
 ;; overrides
 (global-set-key (kbd "C-s")       'isearch-forward-regexp)
 (global-set-key (kbd "C-r")       'isearch-backward-regexp)
+(global-set-key (kbd "C-S-s")     'ag)
 (global-set-key (kbd "C-e")       'end-of-visual-line)
 (global-set-key (kbd "C-x C-f")   'ido-find-file)
 (global-set-key (kbd "C-x C-S-f") 'helm-etags-select)
