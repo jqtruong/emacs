@@ -12,7 +12,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(defvar my-packages '(ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode clojure-test-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitconfig-mode github-browse-file gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode magit-commit-training-wheels magit-gh-pulls gh logito magit-push-remote mongo multiple-cursors neotree nodejs-repl nrepl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete shell-switcher show-css dom starter-kit-bindings starter-kit-eshell starter-kit-lisp elisp-slime-nav starter-kit magit git-rebase-mode git-commit-mode ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode))
+(defvar my-packages '(ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode clojure-test-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitconfig-mode github-browse-file gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode magit-gh-pulls gh logito magit-push-remote mongo multiple-cursors neotree nodejs-repl nrepl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete show-css starter-kit starter-kit-bindings starter-kit-eshell starter-kit-lisp dom elisp-slime-nav magit git-rebase-mode git-commit-mode ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode names shell-switcher))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -33,11 +33,13 @@
 (require 'perso-magit)
 (require 'perso-misc)
 (require 'perso-multiple-cursors)
+(require 'perso-org)
 (require 'perso-paredit)
 (require 'perso-racket)
 (require 'perso-web-mode)
 (require 'perso-windows)
 
+(require 'ag)
 (require 'auto-dim-other-buffers)
 (require 'bs)
 (require 'expand-region)
@@ -53,8 +55,8 @@
 ;;;;;;;;;;;;;;
 ;; hacking! ;;
 ;;;;;;;;;;;;;;
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (setq inferior-lisp-program "sbcl")
 
 ;;;;;;;;;;;;;;
 ;; settings ;;
@@ -306,6 +308,12 @@ customizingly useless"
        do (define-key map key `,function))
     map))
 
+;;; something's off, it worked the first time but then stopped after
+;; making the keybinding. it's possible that i should map it to C-x
+;; C-S-F but not sure why
+;; (fset 'perso/goto-from-*grep*
+;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 58 13 67108896 134217830 134217847 1 24 6 return 134217831 134217831 25 return] 0 "%d")) arg)))
+
 ;;;;;;;;;;;
 ;; modes ;;
 ;;;;;;;;;;;
@@ -330,24 +338,27 @@ customizingly useless"
 (global-set-key (kbd "C-x 3")     (lambda () (interactive)
                                      (split-window-horizontally)
                                      (other-window 1)))
+;; (define-key grep-mode-map (kbd "C-x C-f") 'perso/goto-from-*grep*)
 
 ;; custom
 (global-unset-key (kbd "C-c r"))
-(global-set-key (kbd "C-c r r")    'replace-string)
-(global-set-key (kbd "C-c r c")    'comment-region)
-(global-set-key (kbd "C-c r u")    'uncomment-region)
-(global-set-key (kbd "C-c r e")    'er/expand-region)
-(global-set-key (kbd "C-! b")      'jqt/copy-buffer-name)
-(global-set-key (kbd "C-! t")      'jqt/insert-current-date-time)
-(global-set-key (kbd "C-! s")      'jqt/insert-seconds-from-date)
-(global-set-key (kbd "C-@")        'browse-url)
-(global-set-key (kbd "M-? t")      'jqt/convert-from-unix-timestamp)
-(global-set-key (kbd "M-? p")      'jqt/point)
-(global-set-key (kbd "M-.")        'etags-select-find-tag)
-(global-set-key (kbd "M-Y")        'yank-pop-forwards)
-(global-set-key (kbd "C-z")        'repeat)
-(global-set-key (kbd "C-c w u")    'winner-undo)
-(global-set-key (kbd "C-c w r")    'winner-redo)
+(global-set-key (kbd "C-c r r")  'replace-string)
+(global-set-key (kbd "C-c r c")  'comment-region)
+(global-set-key (kbd "C-c r u")  'uncomment-region)
+(global-set-key (kbd "C-c r e")  'er/expand-region)
+(global-set-key (kbd "C-! b")    'jqt/copy-buffer-name)
+(global-set-key (kbd "C-! t")    'jqt/insert-current-date-time)
+(global-set-key (kbd "C-! s")    'jqt/insert-seconds-from-date)
+(global-set-key (kbd "C-@")      'browse-url)
+(global-set-key (kbd "M-? t")    'jqt/convert-from-unix-timestamp)
+(global-set-key (kbd "M-? p")    'jqt/point)
+(global-set-key (kbd "M-.")      'etags-select-find-tag)
+(global-set-key (kbd "M-Y")      'yank-pop-forwards)
+(global-set-key (kbd "C-z")      'repeat)
+(global-set-key (kbd "C-c w u")  'winner-undo)
+(global-set-key (kbd "C-c w r")  'winner-redo)
+(global-set-key (kbd "C-c l")    'org-store-link)
+(global-set-key (kbd "C-S-s")    'ag)
 
 ;; map
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)

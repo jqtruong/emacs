@@ -7,6 +7,9 @@
 ;;;;;;;;;;;;;;;
 ;; variables ;;
 ;;;;;;;;;;;;;;;
+(defgroup perso/windows nil
+  "Personal windows variables.")
+
 (defcustom window-control-map '(;; switch windows
                                 (?f '(other-window 1))
                                 (?b '(other-window -1))
@@ -28,8 +31,7 @@
                                 (?3 jqt/split-window-into-three))
   ""
   :type 'list
-  :group 'perso
-  :group 'windows)
+  :group 'perso/windows)
 
 (defvar jqt/window-control-p nil
   "")
@@ -173,8 +175,11 @@ is dedicated."
                            (?s jqt/switch-buffer-with-window)
                            ;; TODO missing register ("r w" window-configuration-to-register)
                            ;; TODO ("r j" jump-to-register)
+
+                           ;; switch frames
+                           (?o '(other-frame 1))
+
                            ;; switch buffers
-                           
                            ;; TODO move these to their own buffer map
                            ;; so keys can be reused.
                            (?p previous-buffer)
@@ -182,6 +187,11 @@ is dedicated."
                            (?l `(switch-to-buffer ,(other-buffer)))
                            (?j jqt/switch-to-jabber-chat-buffer)
                            (?J '(jqt/switch-to-jabber-chat-buffer 1))
+                           (?' shell-switcher-switch-buffer-other-window)
+                           (?m perso/windows/mark-window)
+                           ;; TODO unmark buffer
+                           (?U perso/windows/clear-marked-windows)
+                           (?B perso/windows/cycle-marked-windows)
                            
                            ;; window layout
                            (?> winner-redo)
@@ -194,8 +204,43 @@ is dedicated."
                            (?2 split-window-below)
                            (?@ '(jqt/split-to-compare 1))
                            (?3 split-window-right)
-                           (?# perso/windows/lickity-split)))
+                           (?# perso/windows/lickity-split)
+                           (?! jqt/toggle-window-dedication)
+                           ;; normally i use a DELTA of 10 when i run
+                           ;; the command manually and wondering if
+                           ;; it's because i have the font set much
+                           ;; lower (maybe twice lower) that i only
+                           ;; need to use a DELTA of 5 here.
+                           (?- (enlarge-window -5))
+                           (?+ (enlarge-window 5))))
     (jqt/set-temporary-overlay-map map t)))
+
+(defvar perso/windows/windows nil)
+(defun perso/windows/mark-window ()
+  "Mark by collecting window into `perso/windows/windows'."
+  (interactive)
+  (let ((windows perso/windows/windows)
+        (new (selected-window)))
+    (setq perso/windows/windows (remove-duplicates (append windows (list new))))
+    (message "Marked windows: %s." perso/windows/windows)))
+
+(defun perso/windows/clear-marked-windows ()
+  "Resets `perso/windows/windows."
+  (interactive)
+  (setq perso/windows/windows nil)
+  (message "Cleared marked windows."))
+
+(defun perso/windows/cycle-marked-windows ()
+  "Switch to next window in `perso/windows/windows'."
+  (interactive)
+  (let* ((windows perso/windows/windows)
+         (next (car windows))
+         (len  (1- (length windows)))
+         (rest (last windows len)))
+    (setq perso/windows/windows (append rest (list next)))
+    (if (eq next (selected-window))
+        (message "Currently on the next buffer in the cycle. Fixed it, try again.")
+        (select-window next))))
 
 (fset 'jqt/split-window-into-three
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 49 24 51 24 51 24 43 33554438 24 98 return 33554438 24 98 return] 0 "%d")) arg)))
@@ -249,7 +294,7 @@ third of the frame's height by default."
 ;; - . for frames           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; windows
-(global-set-key (kbd "C-;")     'jqt/window-control)
+(global-set-key (kbd "C-M-;")     'jqt/window-control)
 
 
 

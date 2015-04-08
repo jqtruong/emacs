@@ -10,6 +10,7 @@
                        (number-at-point))))
   (let ((date-string (format-time-string "%Y-%m-%d %T" (seconds-to-time seconds))))
     (if no-message-p
+        ;; used non-interactively
         date-string
       (message "%s" date-string))))
 
@@ -129,14 +130,15 @@ nil - at point
   (case option
     (1 (mysql/table-name-from-partial))
     (2 ())
-    (t (mysql/table-name-at-point))))
+    (t (thing-at-point 'symbol))))
 
 (defun mysql/desc-table (&optional option)
   ""
   (interactive "P")
+  (push-mark)
   (let ((name (mysql/table-name option)))
     ;; Move to mysql prompt.
-    (search-forward-regexp "mysql> $" nil t)
+    (search-forward-regexp "> $" nil t)
     ;; Enter command.
     (insert (format "desc %s;" name))
     (comint-send-input)))
@@ -146,7 +148,7 @@ nil - at point
   (interactive "r")
   (let ((fields (jqt/string-friendly-rectangle-lines start end ", ")))
     ;; Move to mysql prompt.
-    (search-forward-regexp "mysql> $" nil t)
+    (search-forward-regexp "> $" nil t)
     (insert (format "select %s from " fields))))
 
 
