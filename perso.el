@@ -22,6 +22,7 @@
 ;; require ;;
 ;;;;;;;;;;;;;
 (require 'perso-ace-jump-mode)
+(require 'perso-bash)
 (require 'perso-emoticons)
 (require 'perso-eshell)
 (require 'perso-ibuffer)
@@ -36,6 +37,7 @@
 (require 'perso-org)
 (require 'perso-paredit)
 (require 'perso-racket)
+(require 'perso-sql)
 (require 'perso-web-mode)
 (require 'perso-windows)
 
