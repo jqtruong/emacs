@@ -20,7 +20,7 @@ ones."
   (interactive "P")
   (let* ((path (file-name-directory buffer-file-name))
          (script (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
-         (dataset (concat(if test-p (concat path "samples/") "~/Downloads/rosalind_") script ".txt"))
+         (dataset (concat (if test-p (concat path "samples/") "~/Downloads/rosalind_") script ".txt"))
          (func (perso/bash/prev-func/name)))
     (async-shell-command (concat ". " buffer-file-name " && " func " " dataset)))))
 
