@@ -133,10 +133,10 @@
   "Do nothing."
   )
 
-(defun jqt/copy-buffer-name ()
+(defun jqt/copy-buffer-name (&optional full)
   "Puts selected buffer's name in the kill ring."
-  (interactive)
-  (kill-new (buffer-name)))
+  (interactive "P")
+  (kill-new (if full (buffer-file-name) (buffer-name))))
 
 (defun jqt/continue (fun)
   "Helper method to set the repeat-key before calling `repeater-map'."
