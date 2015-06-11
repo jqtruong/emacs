@@ -133,10 +133,25 @@
   "Do nothing."
   )
 
-(defun jqt/copy-buffer-name (&optional full)
+(defun jqt/copy-buffer-name (&optional n)
   "Puts selected buffer's name in the kill ring."
   (interactive "P")
-  (kill-new (if full (buffer-file-name) (buffer-name))))
+  (kill-new (if n (perso/path-minus-n n) (buffer-name))))
+
+(defun perso/path-minus-n (n)
+  "Returns current path of current file name minus `N' parts from the head."
+  (let* ((path-parts (split-string (buffer-file-name) "/"))
+         (len (length path-parts)))
+    (if (< len n)
+        (message "%s contains %d parts, less than given %d." path-parts len n)
+        (mapconcat
+         ;; tried 'string or 'symbol-name but they both err on empty string.
+         (lambda (s) s)
+         ;; remove n + 1 parts to include first element, the empty
+         ;; string, since all paths start with `/'.
+         (dotimes (i (1+ n) path-parts)
+           (setq path-parts (cdr path-parts)))
+         "/"))))
 
 (defun jqt/continue (fun)
   "Helper method to set the repeat-key before calling `repeater-map'."
