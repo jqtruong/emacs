@@ -22,7 +22,7 @@ ones."
          (script (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
          (dataset (concat (if test-p (concat path "samples/") "~/Downloads/rosalind_") script ".txt"))
          (func (perso/bash/prev-func/name)))
-    (async-shell-command (concat ". " buffer-file-name " && " func " " dataset)))))
+    (async-shell-command (concat ". " buffer-file-name " && " func " " dataset))))
 
 (defun perso/bash/run/rosalind/test ()
   "See `perso/bash/run/rosalind'."
