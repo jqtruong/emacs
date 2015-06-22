@@ -1,3 +1,5 @@
+(require 'thingatpt)
+
 ;; list of functions that needs some work but are usable fttb.
 
 ;;;;;;;;;;;;;;;
@@ -151,6 +153,14 @@ nil - at point
     (search-forward-regexp "> $" nil t)
     (insert (format "select %s from " fields))))
 
+(defun perso/copy-symbol-at-point ()
+  (interactive)
+  (kill-new (thing-at-point 'symbol)))
+
+;;;;;;;;;;;;;;;;;
+;; keybindings ;;
+;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "s-w")  'perso/copy-symbol-at-point)
 
 
 
