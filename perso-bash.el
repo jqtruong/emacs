@@ -37,11 +37,6 @@ ones."
     (let ((func (thing-at-point 'symbol)))
       func)))
 
-(defun jqt/test ()
-  (interactive)
-  (let ((func (perso/bash/prev-func/name)))
-    (message "%s" func)))
-
 (defun perso/bash/prev-func ()
   "Search backwards for a function definition."
   (interactive)
