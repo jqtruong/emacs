@@ -9,6 +9,12 @@
 ;;;;;;;;;;;
 (add-hook 'js-mode-hook '(lambda ()
                           (highlight-parentheses-mode 1)))
+(add-hook 'json-mode 'flymake-json-load)
+
+;;;;;;;;;;;;;;
+;; settings ;;
+;;;;;;;;;;;;;;
+(modify-syntax-entry ?` "\"" js-mode-syntax-table)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cycle through methods ;;

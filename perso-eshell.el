@@ -60,14 +60,23 @@ Added to eshell-output-filter-functions through customization."
          (progn (forward-line 1) (point)))))))
 
 (defun jqt/eshell-skip-prompt ()
-  "Function for customized value for eshell-skip-prompt."
-  (message "hi"))
+  "Function for customized value for eshell-skip-prompt.")
 
-(setq eshell-skip-prompt-function 'jqt/eshell-skip-prompt)
+(defun perso/eshell/use-existing-window (orig-fun &rest args)
+  (interactive "P")
+  (let ((existing-eshell-window
+         (get-buffer-window (jqt/next-buffer-with-regexp "\*eshell\*"))))
+    (if existing-eshell-window
+        (select-window existing-eshell-window)
+      (apply orig-fun nil))))
+
+(advice-add 'shell-switcher-switch-buffer :around
+            #'perso/eshell/use-existing-window)
 
 ;;;;;;;;;;;;;;
 ;; settings ;;
 ;;;;;;;;;;;;;;
+(setq eshell-skip-prompt-function 'jqt/eshell-skip-prompt)
 (setq shell-switcher-mode t)
 ;; Crucial to see some colors!
 (setq eshell-highlight-prompt nil)
@@ -103,16 +112,6 @@ Added to eshell-output-filter-functions through customization."
 ;; through it, this will let shell-switcher manage that first shell
 ;; see https://github.com/DamienCassou/shell-switcher
 (add-hook 'eshell-mode-hook 'shell-switcher-manually-register-shell)
-
-;;;;;;;;;;;;;;
-;; env vars ;; because eshell doesn't read my .bashrc/.profile
-;;;;;;;;;;;;;;
-;;; old stuff from bloom keeping for reference
-;; (setenv "JAVA_HOME" "/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home")
-;; (setenv "GRAILS_OPTS" "-Xms2g -Xmx2g -XX:PermSize=128m -XX:MaxPermSize=1024m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -server")
-;; (setenv "JAVA_OPTS" "-Djava.awt.headless=true -Xms1G -Xmx1G -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC")
-;; (setenv "VAGRANTMANAGER_CPU" "3")
-;; (setenv "VAGRANTMANAGER_MEM" "6500")
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;

@@ -213,8 +213,8 @@ is dedicated."
                            ;; it's because i have the font set much
                            ;; lower (maybe twice lower) that i only
                            ;; need to use a DELTA of 5 here.
-                           (?- (enlarge-window -5))
-                           (?+ (enlarge-window 5))))
+                           (?- (enlarge-window -3))
+                           (?+ (enlarge-window 3))))
     (jqt/set-temporary-overlay-map map t)))
 
 (defvar perso/windows/windows nil)
@@ -299,6 +299,12 @@ third of the frame's height by default."
 (defun perso/narrow-to-next-sentence ()
   (interactive)
   (perso/narrow-to-sentence 'next))
+
+(defun perso/windows/set-parameter/side (side)
+  (interactive (list (ido-completing-read "Side: "
+                                          '("top" "left" "bottom" "right"))))
+  (let ((window (get-buffer-window)))
+    (set-window-parameter window 'window-side side)))
 
 ;; (fset 'perso/narrow-next-sentence
 ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 110 119 67108896 19 91 91 58 112 117 110 99 116 93 backspace 58 93 93 24 110 110 67108896 67108896] 0 "%d")) arg)))

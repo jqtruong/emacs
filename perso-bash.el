@@ -54,7 +54,7 @@ ones."
 ;;;;;;;;;;;
 (add-hook 'sh-mode-hook
           '(lambda ()
-            (set-fill-column 120)))
+            (set-fill-column 80)))
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
