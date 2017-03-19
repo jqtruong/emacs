@@ -15,7 +15,6 @@
 ;; settings ;;
 ;;;;;;;;;;;;;;
 (modify-syntax-entry ?` "\"" js-mode-syntax-table)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cycle through methods ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;

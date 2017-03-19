@@ -13,7 +13,27 @@
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.gsp$"  . web-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
+(add-to-list 'auto-mode-alist '("react/.*\\.js[x]?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl.php$" . web-mode))
+
+;;;;;;;;;;;;;;
+;; settings ;;
+;;;;;;;;;;;;;;
+(setq web-mode-content-types-alist
+      '(("jsx" . "react/.*\\.js[x]?\\'")))
+
+(add-to-list 'web-mode-comment-formats '("jsx" . "// "))
+(add-to-list 'web-mode-comment-formats '("javascript" . "// "))
+
+;;; @TODO: move this out, but also update as necessary. it currently matches
+;;; parentheses by functions, but maybe one day i'd like to cycle solely through
+;;; functions or classes.
+(defcustom perso/regexp/code-block
+  "class [A-Z][^{]+{\\|\\(function\\)?\\( *\\|[^(]*\\)([^)]*)\\|\\bangular\\."
+  "Javascript functions and Angular method calls.")
+
+(perso/macro/previous-block perso/web/previous-block perso/regexp/code-block)
+(perso/macro/next-block perso/web/next-block perso/regexp/code-block)
 
 ;;;;;;;;;;;
 ;; hooks ;;
@@ -29,8 +49,6 @@
 ;;;;;;;;;;;
 ;; faces ;;
 ;;;;;;;;;;;
-;; (set-face-attribute 'web-mode-html-tag-face nil :foreground
-;; "#2075c7")
 (set-face-attribute 'web-mode-html-tag-face nil :foreground "#aa5588")
 (set-face-attribute 'web-mode-html-attr-name-face nil :foreground "#5588aa")
 (set-face-attribute 'web-mode-html-attr-value-face nil :foreground "#88aa55")
@@ -38,7 +56,10 @@
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
-(define-key web-mode-map (kbd "C-;") nil) ; C-; personally reserved for window management.
+; (define-key web-mode-map (kbd "C-;") nil) ; C-; personally reserved for window
+                                        ; management.
+(define-key web-mode-map (kbd "M-p")     'perso/web/previous-block)
+(define-key web-mode-map (kbd "M-n")     'perso/web/next-block)
 
 ;;;;;;;;;
 ;; end ;;

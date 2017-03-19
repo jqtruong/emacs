@@ -18,6 +18,13 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+;;;;;;;;;;
+;; Lisp ;;
+;;;;;;;;;;
+(eval-after-load 'cl-indent
+  `(progn
+     (put 'css-lite:css 'common-lisp-indent-function '(&rest (&whole 2 &rest nil)))))
+
 ;;;;;;;;;;;;;
 ;; require ;;
 ;;;;;;;;;;;;;
@@ -29,6 +36,7 @@
 (require 'perso-ido-mode)
 (require 'perso-jabber)
 (require 'perso-js)
+(require 'perso-lisp)
 (require 'perso-lua)
 (require 'perso-macros)
 (require 'perso-magit)
@@ -71,11 +79,6 @@
 (ido-mode 1)
 (winner-mode 1)
 (column-number-mode)
-(setq lisp-indent-function 'common-lisp-indent-function)
-(eval-after-load "cl-indent"
-  '(progn
-     (put 'cl-flet 'common-lisp-indent-function 
-          (get 'flet 'common-lisp-indent-function))))
 (auto-dim-other-buffers-mode 1)
 
 ;; active Babel languages

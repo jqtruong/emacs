@@ -12,20 +12,21 @@
 ;;;;;;;;;;;;;;
 (setq ibuffer-saved-filter-groups
       '(("default"
-         ("dired" (mode . dired-mode))
+         ("dired"  (mode . dired-mode))
          ("Drupal" (filename . "drupal"))
-         ("php" (filename . "\\.php$\\|\\.inc$"))
-         ("html" (filename . "\\.\\(p\\)?html$\\|\\.tpl$"))
-         ("css" (filename . "\\.css"))
-         ("js" (filename . "\\.js\\(on\\)?"))
-         ("iOS" (filename . "iOS"))
-         ("emacs" (or
-                   (name . "^\\*scratch\\*$")
-                   (name . "^\\*Messages\\*$")))
-         ("elisp" (mode . emacs-lisp-mode))
-         ("Org" (name . "\\.org$"))
+         ("php"    (filename . "\\.php$\\|\\.inc$"))
+         ("html"   (filename . "\\.\\(p\\)?html$\\|\\.tpl$"))
+         ("css"    (filename . "\\.css"))
+         ("js"     (filename . "\\.js\\(on\\)?"))
+         ("iOS"    (filename . "iOS"))
+         ("emacs"  (or
+                    (name . "^\\*scratch\\*$")
+                    (name . "^\\*Messages\\*$")))
+         ("elisp"  (mode . emacs-lisp-mode))
+         ("lisp"   (mode . lisp-mode))
+         ("Org"    (name . "\\.org$"))
          ("shells" (name . "\\*eshell\\*"))
-         ("magit" (name . "^\\*magit\\(: \\|-\\).*\\*$")))))
+         ("magit"  (name . "^\\*magit\\(: \\|-\\).*\\*$")))))
 
 (add-hook 'ibuffer-mode-hook '(lambda ()
                                (ibuffer-auto-mode 1)

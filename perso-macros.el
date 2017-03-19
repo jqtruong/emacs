@@ -36,5 +36,20 @@ functions."
      (interactive)
      (kill-new ,string)))
 
+(defmacro perso/macro/previous-block (fun-name regexp)
+  `(defun ,fun-name ()
+     (interactive)
+     (re-search-backward ,regexp nil t)
+     (goto-char (match-beginning 1))))
+
+(defmacro perso/macro/next-block (fun-name regexp)
+  `(defun ,fun-name ()
+     (interactive)
+     (re-search-forward ,regexp nil t)
+     (goto-char (match-beginning 1))))
+
+;;;;;;;;;;;;;;
+;; the end. ;;
+;;;;;;;;;;;;;;
 
 (provide 'perso-macros)
