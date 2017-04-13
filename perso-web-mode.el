@@ -53,11 +53,10 @@
 (set-face-attribute 'web-mode-html-attr-name-face nil :foreground "#5588aa")
 (set-face-attribute 'web-mode-html-attr-value-face nil :foreground "#88aa55")
 
+
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
-; (define-key web-mode-map (kbd "C-;") nil) ; C-; personally reserved for window
-                                        ; management.
 (define-key web-mode-map (kbd "M-p")     'perso/web/previous-block)
 (define-key web-mode-map (kbd "M-n")     'perso/web/next-block)
 

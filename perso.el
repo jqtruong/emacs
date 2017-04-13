@@ -30,6 +30,7 @@
 ;;;;;;;;;;;;;
 (require 'perso-ace-jump-mode)
 (require 'perso-bash)
+(require 'perso-dev)
 (require 'perso-emoticons)
 (require 'perso-eshell)
 (require 'perso-ibuffer)

@@ -192,8 +192,6 @@ is dedicated."
                            ;; TODO unmark buffer
                            (?U perso/windows/clear-marked-windows)
                            (?B perso/windows/cycle-marked-windows)
-                           (?P perso/narrow-to-previous-sentence)
-                           (?N perso/narrow-to-next-sentence)
                            
                            ;; window layout
                            (?> winner-redo)
@@ -213,8 +211,12 @@ is dedicated."
                            ;; it's because i have the font set much
                            ;; lower (maybe twice lower) that i only
                            ;; need to use a DELTA of 5 here.
-                           (?- (enlarge-window -3))
-                           (?+ (enlarge-window 3))))
+                           (?- (enlarge-window -2))
+                           (?+ (enlarge-window 2))
+
+                           ;; move about buffer (should move this out to
+                           ;; perso-buffer-manager)
+                           ))
     (jqt/set-temporary-overlay-map map t)))
 
 (defvar perso/windows/windows nil)
