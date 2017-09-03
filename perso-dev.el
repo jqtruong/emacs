@@ -56,9 +56,12 @@ is first converted to its rgb decimal counterparts."
   (interactive "p")
   (start-process "perso" nil "refresh-browser" "Chromium" (number-to-string tab)))
 
-(defun perso/dev/relchrothemax ()
-  (interactive)
-  (start-process "perso" nil "relchrothemax"))
+(defun perso/dev/relchrothemax (&optional go-back-p)
+  ""
+  (interactive "P")
+  (save-buffer)
+  (message "done %s" go-back-p)
+  (start-process "perso" nil "relchrothemax" (if go-back-p "1" "")))
 
 (defun perso/dev/save-and-go (tab)
   (interactive "p")
@@ -66,15 +69,15 @@ is first converted to its rgb decimal counterparts."
   (perso/dev/refresh-chromium tab))
 
 (fset 'perso/dev/line-down-section
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("]" 0 "%d")) arg)))
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("]" 0 "%d")) arg)))
 
 (fset 'perso/dev/line-up-section
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("[" 0 "%d")) arg)))
+      (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("[" 0 "%d")) arg)))
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "s-d r")      'perso/dev/refresh-chromium)
-(global-set-key (kbd "s-<return>") (lambda () (interactive) (save-buffer) (perso/dev/relchrothemax)))
+(global-set-key (kbd "s-<return>") 'perso/dev/relchrothemax)
 (global-set-key (kbd "s-n")        'perso/dev/line-down-section)
 (global-set-key (kbd "s-p")        'perso/dev/line-up-section)

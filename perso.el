@@ -2,8 +2,8 @@
 ;; packages ;;
 ;;;;;;;;;;;;;;
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
@@ -47,6 +47,7 @@
 (require 'perso-org)
 (require 'perso-paredit)
 (require 'perso-racket)
+(require 'perso-setup)
 (require 'perso-sql)
 (require 'perso-tide)
 (require 'perso-web-mode)
@@ -117,6 +118,13 @@
 (add-hook 'sql-mode-hook
           (lambda ()
             (sql-highlight-mysql-keywords)))
+
+;;; TODO move to perso-c
+
+(font-lock-add-keywords 'c-mode
+                        '(("\\(\\w+\\)\\s-*\("
+                           (1 font-lock-function-name-face)))
+                        t)
 
 ;;;;;;;;;;;;;
 ;; advices ;;

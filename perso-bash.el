@@ -49,6 +49,7 @@ ones."
   (re-search-forward perso/regexp/bash/function nil t)
   (goto-char (match-end 1)))
 
+
 ;;;;;;;;;;;
 ;; setup ;;
 ;;;;;;;;;;;
@@ -56,6 +57,7 @@ ones."
           '(lambda ()
             (set-fill-column 80)))
 
+
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
