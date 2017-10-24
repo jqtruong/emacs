@@ -63,11 +63,17 @@ Added to eshell-output-filter-functions through customization."
   "Function for customized value for eshell-skip-prompt.")
 
 (defun perso/eshell/use-existing-window (orig-fun &rest args)
+  "If a window exists with an eshell buffer, switch to it first."
   (interactive "P")
-  (let ((existing-eshell-window
-         (get-buffer-window (jqt/next-buffer-with-regexp "\*eshell\*"))))
-    (if existing-eshell-window
-        (select-window existing-eshell-window)
+  (let ((eshell-buffers (remove-if-not
+                         (lambda (buffer) (string-match "\*eshell\*" (buffer-name buffer)))
+                         (buffer-list))))
+    (if (loop
+           for buffer in eshell-buffers
+           for window = (get-buffer-window buffer)
+           when window
+           return (select-window window))
+        (sswitcher--prepare-for-fast-key)
       (apply orig-fun nil))))
 
 (advice-add 'shell-switcher-switch-buffer :around
