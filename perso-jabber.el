@@ -2,15 +2,10 @@
 ;; require ;;
 ;;;;;;;;;;;;;
 (require 'jabber)
-(require 'netrc)
 
-;;;;;;;;;;;;;;
-;; settings ;;
-;;;;;;;;;;;;;;
-(setq cred (netrc-machine (netrc-parse "~/.authinfo") "jabber" t))
+;;; Protected accounted in ~/.authinfo.gpg
 (setq jabber-account-list
       `(("jerometruong@gmail.com"
-         (:password . ,(netrc-get cred "password"))
          (:network-server . "talk.google.com")
          (:port . 5223)
          (:connection-type . ssl))))

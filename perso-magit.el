@@ -2,7 +2,7 @@
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-m") (lambda () (interactive)
-                               (magit-status default-directory)
+                               (magit-status-internal default-directory)
                                (delete-other-windows)))
 
 ;;;;;;;;;

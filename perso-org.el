@@ -4,6 +4,10 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sh . t)))
+ '((shell . t)
+   (emacs-lisp . t)))
+
+(add-hook 'org-mode-hook
+          (lambda () (set-fill-column 60)))
 
 (provide 'perso-org)

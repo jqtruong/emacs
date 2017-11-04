@@ -12,7 +12,51 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(defvar my-packages '(ace-jump-buffer ace-jump-mode auto-dim-other-buffers base16-theme cljsbuild-mode cider clojurescript-mode dic-lookup-w3m etags-select expand-region geiser gitignore-mode helm helm-ls-git highlight-parentheses hlinum inf-mongo jabber jade-mode js-comint json-mode json-reformat json-snatcher jsx-mode less-css-mode love-minor-mode lua-mode logito mongo multiple-cursors neotree nodejs-repl dash clojure-mode ob-mongo org-magit org paradox pastebin pcache pkg-info epl pomodoro powerline quack racket-mode request s scheme-complete show-css starter-kit starter-kit-bindings starter-kit-eshell starter-kit-lisp dom elisp-slime-nav magit ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit stem sws-mode tabulated-list twittering-mode undo-tree w3m web-mode names shell-switcher))
+(defvar my-packages '(ace-jump-buffer
+                      ace-jump-mode
+                      ag
+                      auto-dim-other-buffers
+                      base16-theme
+                      dic-lookup-w3m
+                      etags-select
+                      expand-region
+                      geiser
+                      gitignore-mode
+                      helm
+                      helm-ls-git
+                      highlight-parentheses
+                      hlinum
+                      inf-mongo
+                      jabber
+                      jade-mode
+                      js-comint
+                      json-mode
+                      json-reformat
+                      json-snatcher
+                      jsx-mode
+                      less-css-mode
+                      love-minor-mode
+                      lua-mode
+                      logito
+                      mongo
+                      multiple-cursors
+                      neotree
+                      nodejs-repl
+                      dash
+                      ob-mongo
+                      org
+                      pkg-info
+                      elisp-slime-nav
+                      magit
+                      ido-ubiquitous
+                      idle-highlight-mode
+                      paredit
+                      twittering-mode
+                      undo-tree
+                      w3m
+                      web-mode
+                      names
+                      shell-switcher))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -49,7 +93,6 @@
 (require 'perso-racket)
 (require 'perso-setup)
 (require 'perso-sql)
-(require 'perso-tide)
 (require 'perso-web-mode)
 (require 'perso-windows)
 
@@ -62,7 +105,6 @@
 (require 'highlight-parentheses)
 (require 'hlinum)
 (require 'idle-highlight-mode)
-(require 'starter-kit-defuns)
 (require 'undo-tree)
 (require 'winner)
 
@@ -82,22 +124,12 @@
 (winner-mode 1)
 (column-number-mode)
 (auto-dim-other-buffers-mode 1)
-
-;; active Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sql . t)))
-;; add additional languages with '((language . t)))
+(menu-bar-mode 0)
+(tool-bar-mode 0)
 
 ;;;;;;;;;;;
 ;; hooks ;;
 ;;;;;;;;;;;
-;; These starter-kit cool things mess up web-mode
-;; https://github.com/fxbois/web-mode/issues/117
-(remove-hook 'prog-mode-hook 'esk-pretty-lambdas)
-(remove-hook 'prog-mode-hook 'esk-add-watchwords)
-(remove-hook 'prog-mode-hook 'idle-highlight-mode)
-
 ;; instead, i prefer linum-mode hlinum combo
 (add-hook 'prog-mode-hook '(lambda ()
                             (linum-mode)
@@ -105,13 +137,9 @@
 
 ;; TODO move to perso-lisp or something
 (add-hook 'lisp-mode-hook '(lambda ()
-                            (esk-pretty-lambdas)
-                            (esk-add-watchwords)
                             (idle-highlight-mode)))
 (add-hook 'emacs-lisp-mode-hook '(lambda ()
                                   (highlight-parentheses-mode 1)
-                                  (esk-pretty-lambdas)
-                                  (esk-add-watchwords)
                                   (idle-highlight-mode)))
 (add-hook 'clojure-mode-hook '(lambda ()
                                (highlight-parentheses-mode 1)))
