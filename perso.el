@@ -56,7 +56,8 @@
                       w3m
                       web-mode
                       names
-                      shell-switcher))
+                      shell-switcher
+                      smex))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -399,6 +400,7 @@ customizingly useless"
 (global-set-key (kbd "C-x 3")     (lambda () (interactive)
                                      (split-window-horizontally)
                                      (other-window 1)))
+(global-set-key (kbd "M-x")       'smex)
 ;; (define-key grep-mode-map (kbd "C-x C-f") 'perso/goto-from-*grep*)
 
 ;; custom

@@ -157,6 +157,16 @@ nil - at point
   (interactive)
   (kill-new (thing-at-point 'symbol)))
 
+(defun my-ip-filter (p ip)
+  (let ((ip (replace-regexp-in-string "\n" "" ip)))
+    (message "Got ip: %s" ip)
+    (kill-new ip))))
+
+(defun perso/ip ()
+  (interactive)
+  (let ((proc (start-process "my-ip" nil "/home/nymo/bash/my-ip")))
+    (set-process-filter proc #'my-ip-filter)))
+
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
