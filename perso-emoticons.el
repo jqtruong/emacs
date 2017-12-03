@@ -38,7 +38,7 @@
 (defun-emoticon ascii/heart "-`ღ´-")
 (defun-emoticon ascii/headphones "d[-_-]b")
 (defun-emoticon ascii/jro "JRΩ")
-
+(defun-emoticon ascii/dab "ヾ(-_- )ゞ")
 
 
 (provide 'perso-emoticons)
