@@ -160,7 +160,7 @@ nil - at point
 (defun my-ip-filter (p ip)
   (let ((ip (replace-regexp-in-string "\n" "" ip)))
     (message "Got ip: %s" ip)
-    (kill-new ip))))
+    (kill-new ip)))
 
 (defun perso/ip ()
   (interactive)
