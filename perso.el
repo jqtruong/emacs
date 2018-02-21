@@ -78,6 +78,7 @@
 (require 'perso-dev)
 (require 'perso-emoticons)
 (require 'perso-eshell)
+(require 'perso-go)
 (require 'perso-ibuffer)
 (require 'perso-ido-mode)
 (require 'perso-jabber)
@@ -374,6 +375,14 @@ customizingly useless"
 ;; C-S-F but not sure why
 ;; (fset 'perso/goto-from-*grep*
 ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 58 13 67108896 134217830 134217847 1 24 6 return 134217831 134217831 25 return] 0 "%d")) arg)))
+
+(defun perso/docker/start ()
+  (interactive)
+  (async-shell-command "sudo systemctl start docker"))
+
+(defun perso/docker/status ()
+  (interactive)
+  (async-shell-command "systemctl status docker"))
 
 ;;;;;;;;;;;
 ;; modes ;;
