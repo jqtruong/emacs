@@ -43,7 +43,6 @@
                       neotree
                       nodejs-repl
                       dash
-                      ob-mongo
                       org
                       pkg-info
                       elisp-slime-nav
@@ -93,6 +92,7 @@
 (require 'perso-org)
 (require 'perso-paredit)
 (require 'perso-racket)
+(require 'perso-reason-ml)
 (require 'perso-setup)
 (require 'perso-sql)
 (require 'perso-web-mode)
