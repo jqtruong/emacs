@@ -92,7 +92,6 @@
 (require 'perso-org)
 (require 'perso-paredit)
 (require 'perso-racket)
-(require 'perso-reason-ml)
 (require 'perso-setup)
 (require 'perso-sql)
 (require 'perso-web-mode)
