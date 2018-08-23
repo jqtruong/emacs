@@ -18,9 +18,7 @@
                       auto-dim-other-buffers
                       base16-theme
                       dic-lookup-w3m
-                      etags-select
                       expand-region
-                      geiser
                       gitignore-mode
                       helm
                       helm-ls-git
@@ -35,22 +33,16 @@
                       json-snatcher
                       jsx-mode
                       less-css-mode
-                      love-minor-mode
-                      lua-mode
                       logito
-                      mongo
                       multiple-cursors
                       neotree
-                      nodejs-repl
                       dash
                       org
                       pkg-info
                       elisp-slime-nav
                       magit
-                      ido-ubiquitous
                       idle-highlight-mode
                       paredit
-                      twittering-mode
                       undo-tree
                       w3m
                       web-mode
@@ -82,8 +74,8 @@
 (require 'perso-ido-mode)
 (require 'perso-jabber)
 (require 'perso-js)
-(require 'perso-lisp)
-(require 'perso-lua)
+; (require 'perso-lisp)
+; (require 'perso-lua)
 (require 'perso-macros)
 (require 'perso-magit)
 (require 'perso-misc)

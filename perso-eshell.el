@@ -2,6 +2,7 @@
 ;; require ;;
 ;;;;;;;;;;;;;
 (require 'em-tramp)
+(require 'esh-module)
 (require 'shell-switcher)
 
 ;;;;;;;;;;;;;;;
@@ -84,7 +85,14 @@ Added to eshell-output-filter-functions through customization."
 ;;;;;;;;;;;;;;
 (setq eshell-skip-prompt-function 'jqt/eshell-skip-prompt)
 (setq shell-switcher-mode t)
-;; Crucial to see some colors!
+
+;;; sudo https://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes/5619
+(add-to-list 'eshell-modules-list 'eshell-tramp)
+(setq eshell-prefer-lisp-functions t)   ; mainly for sudo atm 2018-08-23 12:15:08
+(setq password-cache t)                 ; enable password caching
+(setq password-cache-expiry 60)         ; time in seconds
+
+;;; Crucial to see some colors!
 (setq eshell-highlight-prompt nil)
 (setq eshell-prompt-function
       (lambda ()
