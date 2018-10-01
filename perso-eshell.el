@@ -96,28 +96,37 @@ Added to eshell-output-filter-functions through customization."
 (setq eshell-highlight-prompt nil)
 (setq eshell-prompt-function
       (lambda ()
-        (concat
-         (format-time-string "\n%T " (current-time))
-         (propertize (user-login-name) 'face `(:foreground "#2b5dcd"))
-         ":"
-         ((lambda (p-lst)
-            (if (> (length p-lst) 3)
-                (concat
-                 (mapconcat (lambda (elm) (if (zerop (length elm)) ""
-                                            (substring elm 0 1)))
-                            (butlast p-lst 3)
-                            "/")
-                 "/"
-                 (mapconcat (lambda (elm) elm)
-                            (last p-lst 3)
-                            "/"))
-              (mapconcat (lambda (elm) elm)
-                         p-lst
-                         "/")))
-          (split-string (pwd-repl-home (eshell/pwd)) "/"))
-         (or (curr-dir-git-branch-string (eshell/pwd))
-             (curr-dir-svn-string (eshell/pwd)))
-         "\n$ ")))
+        (let* ((bat (battery-linux-sysfs))
+               (status (cdr (assoc 66 bat)))
+               (eta (cdr (assoc 116 bat))))
+            (concat
+             (format-time-string "\n%T " (current-time))
+             "["
+             (cdr (assoc 112 bat)) "%"
+             (cond ((string= status "Discharging") (concat " -" eta))
+                   ((string= status "Charging") (concat " +" eta))
+                   (t ""))
+             "] "
+             (propertize (user-login-name) 'face `(:foreground "#2b5dcd"))
+             ":"
+             ((lambda (p-lst)
+                (if (> (length p-lst) 3)
+                    (concat
+                     (mapconcat (lambda (elm) (if (zerop (length elm)) ""
+                                                (substring elm 0 1)))
+                                (butlast p-lst 3)
+                                "/")
+                     "/"
+                     (mapconcat (lambda (elm) elm)
+                                (last p-lst 3)
+                                "/"))
+                  (mapconcat (lambda (elm) elm)
+                             p-lst
+                             "/")))
+              (split-string (pwd-repl-home (eshell/pwd)) "/"))
+             (or (curr-dir-git-branch-string (eshell/pwd))
+                 (curr-dir-svn-string (eshell/pwd)))
+             "\n$ "))))
 
 ;;;;;;;;;;;
 ;; hooks ;;
