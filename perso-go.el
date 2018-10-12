@@ -1,3 +1,6 @@
+(when (not (package-installed-p 'go-mode))
+    (package-install 'go-mode))
+
 (require 'go-mode)
 
 (add-hook 'go-mode-hook
