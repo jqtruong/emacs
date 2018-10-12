@@ -77,7 +77,3 @@ is first converted to its rgb decimal counterparts."
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "s-d r")      'perso/dev/refresh-chromium)
-(global-set-key (kbd "s-<return>") 'perso/dev/relchrothemax)
-(global-set-key (kbd "s-n")        'perso/dev/line-down-section)
-(global-set-key (kbd "s-p")        'perso/dev/line-up-section)
