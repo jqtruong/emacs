@@ -11,6 +11,7 @@
 (add-hook 'sql-interactive-mode-hook 'perso/sql/sql-interactive-mode-hook)
 (defun perso/sql/sql-interactive-mode-hook ()
   "Custom interactive SQL mode behaviours. See `sql-interactive-mode-hook'."
+  (toggle-truncate-lines 1)
   (when (eq sql-product 'postgres)
     ;; Allow symbol chars in database names in prompt.
     ;; Default postgres pattern was: "^\\w*=[#>] " (see `sql-product-alist').
