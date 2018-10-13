@@ -96,7 +96,7 @@ Added to eshell-output-filter-functions through customization."
 (setq eshell-highlight-prompt nil)
 (setq eshell-prompt-function
       (lambda ()
-        (let* ((bat (battery-linux-sysfs))
+        (let* ((bat (if (fboundp 'battery-linux-sysfs) (battery-linux-sysfs) '((112 . "always 100"))))
                (status (cdr (assoc 66 bat)))
                (eta (cdr (assoc 116 bat))))
             (concat
