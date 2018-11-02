@@ -98,7 +98,7 @@ Added to eshell-output-filter-functions through customization."
       (lambda ()
         (let* ((bat (if (fboundp 'battery-linux-sysfs) (battery-linux-sysfs) '((112 . "always 100"))))
                (status (cdr (assoc 66 bat)))
-               (eta (cdr (assoc 116 bat))))
+               (eta (cdr (assoc 116 bat)))) ; mostly showing 10 hours remaining which is completely false, right?
             (concat
              (format-time-string "\n%T " (current-time))
              "["
