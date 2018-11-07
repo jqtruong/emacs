@@ -24,6 +24,7 @@
                     (name . "^\\*Messages\\*$")))
          ("elisp"  (mode . emacs-lisp-mode))
          ("lisp"   (mode . lisp-mode))
+         ("bash"   (mode . sh-mode))
          ("Org"    (name . "\\.org$"))
          ("shells" (name . "\\*eshell\\*"))
          ("magit"  (name . "^\\*magit\\(: \\|-\\).*\\*$")))))
