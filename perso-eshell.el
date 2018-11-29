@@ -75,7 +75,9 @@ Added to eshell-output-filter-functions through customization."
            when window
            return (select-window window))
         (sswitcher--prepare-for-fast-key)
-      (apply orig-fun nil))))
+      (progn
+        (apply orig-fun nil)
+        (forward-page)))))
 
 (advice-add 'shell-switcher-switch-buffer :around
             #'perso/eshell/use-existing-window)
