@@ -18,7 +18,6 @@
          ("html"   (filename . "\\.\\(p\\)?html$\\|\\.tpl$"))
          ("css"    (filename . "\\.css"))
          ("js"     (filename . "\\.js\\(on\\)?"))
-         ("iOS"    (filename . "iOS"))
          ("emacs"  (or
                     (name . "^\\*scratch\\*$")
                     (name . "^\\*Messages\\*$")))
