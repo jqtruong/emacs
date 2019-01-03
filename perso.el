@@ -83,7 +83,7 @@
 (require 'perso-node)
 (require 'perso-org)
 (require 'perso-paredit)
-(require 'perso-racket)
+; (require 'perso-racket)
 (require 'perso-setup)
 (require 'perso-sql)
 (require 'perso-web-mode)
