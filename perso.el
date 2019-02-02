@@ -43,6 +43,7 @@
                       magit
                       idle-highlight-mode
                       paredit
+                      rjsx-mode
                       undo-tree
                       w3m
                       web-mode
@@ -74,7 +75,7 @@
 (require 'perso-ido-mode)
 (require 'perso-jabber)
 (require 'perso-js)
-; (require 'perso-lisp)
+(require 'perso-lisp)
 (require 'perso-macros)
 (require 'perso-magit)
 (require 'perso-misc)
