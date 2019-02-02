@@ -68,6 +68,7 @@
 (require 'perso-ace-jump-mode)
 (require 'perso-bash)
 (require 'perso-dev)
+(require 'perso-docker)
 (require 'perso-emoticons)
 (require 'perso-eshell)
 (require 'perso-go)
