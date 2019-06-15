@@ -8,7 +8,7 @@
 ;;;;;;;;;;;;;;
 ;;; Slime
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq inferior-lisp-program "/usr/bin/sbcl --dynamic-space-size 12000")
 (setq slime-contribs '(slime-fancy slime-cl-indent))
 
 ;; (eval-after-load "cl-indent"
