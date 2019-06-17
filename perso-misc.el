@@ -170,7 +170,7 @@ nil - at point
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "s-w")  'perso/copy-symbol-at-point)
+(global-set-key (kbd "C-S-w")  'perso/copy-symbol-at-point)
 
 
 

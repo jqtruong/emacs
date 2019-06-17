@@ -15,12 +15,14 @@
 ;;;;;;;;;;;;;;;
 (defun perso/bash/run/rosalind (&optional test-p)
   "On a Rosalind script, run the function of which the cursor is
-currently within with either the problems dataset or the sample
+currently within, with either the problems dataset or the sample
 ones."
   (interactive "P")
-  (let* ((path (file-name-directory buffer-file-name))
-         (script (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
-         (dataset (concat (if test-p (concat path "samples/") "~/Downloads/rosalind_") script ".txt"))
+  (let* ((path (file-name-directory buffer-file-name)) ;get file directory path
+         (script (file-name-nondirectory buffer-file-name))
+         (id (file-name-sans-extension script))
+         (name (file-name-extension script))
+         (dataset (concat (if test-p (concat path "samples/") "~/Downloads/rosalind_") name ".txt"))
          (func (perso/bash/prev-func/name)))
     (async-shell-command (concat ". " buffer-file-name " && " func " " dataset))))
 
@@ -30,12 +32,11 @@ ones."
   (perso/bash/run/rosalind t))
 
 (defun perso/bash/prev-func/name ()
-  "Puts the previous function name into the kill ring."
+  "Returns the previous function name, nearest to cursor, including from within the body of one."
   (interactive)
   (save-excursion
     (perso/bash/prev-func)
-    (let ((func (thing-at-point 'symbol)))
-      func)))
+    (thing-at-point 'symbol)))
 
 (defun perso/bash/prev-func ()
   "Search backwards for a function definition."
