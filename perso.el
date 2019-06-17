@@ -5,7 +5,7 @@
 ;; (add-to-list 'package-archives
 ;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa-" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;;; fetch the list of packages available 
@@ -43,6 +43,7 @@
                       magit
                       idle-highlight-mode
                       paredit
+                      rjsx-mode
                       undo-tree
                       w3m
                       web-mode

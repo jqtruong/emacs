@@ -87,6 +87,7 @@ Added to eshell-output-filter-functions through customization."
 ;;;;;;;;;;;;;;
 (setq eshell-skip-prompt-function 'jqt/eshell-skip-prompt)
 (setq shell-switcher-mode t)
+(setq eshell-cmpl-ignore-case t)
 
 ;;; sudo https://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes/5619
 (add-to-list 'eshell-modules-list 'eshell-tramp)
