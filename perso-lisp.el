@@ -22,12 +22,6 @@
           '(lambda ()
             (highlight-parentheses-mode)))
 
-;;;;;;;;;;;;;;;;;
-;; keybindings ;;
-;;;;;;;;;;;;;;;;;
-(fset 'buffer/sbcl
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([24 53 98 115 98 99 108 return] 0 "%d")) arg)))
-
 ;;;;;;;;;
 ;; end ;;
 ;;;;;;;;;

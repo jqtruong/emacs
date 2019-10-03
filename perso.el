@@ -103,12 +103,6 @@
 (require 'winner)
 
 ;;;;;;;;;;;;;;
-;; hacking! ;;
-;;;;;;;;;;;;;;
-;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
-;; (setq inferior-lisp-program "sbcl")
-
-;;;;;;;;;;;;;;
 ;; settings ;;
 ;;;;;;;;;;;;;;
 (setq-default indent-tabs-mode nil)
