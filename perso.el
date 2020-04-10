@@ -1,16 +1,35 @@
+;;; perso --- Personal Helpers
+
+;;; Commentary:
+
+;;; Code:
+
 ;;;;;;;;;;;;;;
 ;; packages ;;
 ;;;;;;;;;;;;;;
 (require 'package)
-;; (add-to-list 'package-archives
-;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
 (package-initialize)
 
-;;; fetch the list of packages available 
+;;; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
+
+;; Install use-package if not already installed
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+
+;; Enable defer and ensure by default for use-package
+;; Keep auto-save/backup files separate from source code:  https://github.com/scalameta/metals/issues/1027
+(setq use-package-always-defer t
+      use-package-always-ensure t
+      backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 (defvar my-packages '(ace-jump-buffer
                       ace-jump-mode
@@ -58,9 +77,9 @@
 ;;;;;;;;;;
 ;; Lisp ;;
 ;;;;;;;;;;
-(eval-after-load 'cl-indent
-  `(progn
-     (put 'css-lite:css 'common-lisp-indent-function '(&rest (&whole 2 &rest nil)))))
+;; (eval-after-load 'cl-indent
+;;   `(progn
+;;      (put 'css-lite:css 'common-lisp-indent-function '(&rest (&whole 2 &rest nil)))))
 
 ;;;;;;;;;;;;;
 ;; require ;;
@@ -76,7 +95,7 @@
 (require 'perso-ido-mode)
 (require 'perso-jabber)
 (require 'perso-js)
-(require 'perso-lisp)
+;; (require 'perso-lisp)
 (require 'perso-macros)
 (require 'perso-magit)
 (require 'perso-misc)
@@ -164,12 +183,12 @@
   )
 
 (defun jqt/copy-buffer-name (&optional n)
-  "Puts selected buffer's name in the kill ring."
+  "Puts selected buffer's name, N, in the kill ring."
   (interactive "P")
   (kill-new (if n (perso/path-minus-n n) (buffer-name))))
 
 (defun perso/path-minus-n (n)
-  "Returns current path of current file name minus `N' parts from the head."
+  "Return current path of current file name minus `N' parts from the head."
   (let* ((path-parts (split-string (buffer-file-name) "/"))
          (len (length path-parts)))
     (if (< len n)
@@ -184,7 +203,7 @@
          "/"))))
 
 (defun jqt/continue (fun)
-  "Helper method to set the repeat-key before calling `repeater-map'."
+  "Helper method FUN to set the repeat-key before calling `repeater-map'."
   (let ((repeat-key (event-basic-type last-input-event)))
     (repeater-map repeat-key fun)))
 
@@ -384,7 +403,6 @@ customizingly useless"
 (global-set-key (kbd "C-S-s")     'ag)
 (global-set-key (kbd "C-e")       'end-of-visual-line)
 (global-set-key (kbd "C-x C-f")   'ido-find-file)
-(global-set-key (kbd "C-x C-S-f") 'helm-etags-select)
 (global-set-key (kbd "C-x b")     'ido-switch-buffer)
 (global-set-key (kbd "C-x B")     'bs-show)
 (global-set-key (kbd "C-x C-b")   'helm-for-files)
@@ -408,9 +426,8 @@ customizingly useless"
 (global-set-key (kbd "C-! t")    'jqt/insert-current-date-time)
 (global-set-key (kbd "C-! s")    'jqt/insert-seconds-from-date)
 (global-set-key (kbd "C-@")      'browse-url)
-(global-set-key (kbd "s-? t")    'jqt/convert-from-unix-timestamp)
-(global-set-key (kbd "s-? p")    'jqt/point)
-(global-set-key (kbd "M-.")      'etags-select-find-tag)
+(global-set-key (kbd "s-S-/ t")  'jqt/convert-from-unix-timestamp)
+(global-set-key (kbd "s-S-/ p")  'jqt/point)
 (global-set-key (kbd "M-Y")      'yank-pop-forwards)
 (global-set-key (kbd "C-z")      'repeat)
 (global-set-key (kbd "C-c w u")  'winner-undo)

@@ -56,7 +56,8 @@ ones."
 ;;;;;;;;;;;
 (add-hook 'sh-mode-hook
           '(lambda ()
-            (set-fill-column 80)))
+             (set-fill-column 80)
+             (sh-electric-here-document-mode nil)))
 
 
 ;;;;;;;;;;;;;;;;;

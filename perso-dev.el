@@ -74,6 +74,20 @@ is first converted to its rgb decimal counterparts."
 (fset 'perso/dev/line-up-section
       (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("[" 0 "%d")) arg)))
 
+(defun perso/dev/vigit-file ()
+  (interactive)
+  (let ((absol-path (buffer-file-name))
+        (linum (format-mode-line "%l")))
+    (start-process "perso" nil "vigit-file" absol-path linum)))
+
+;;; TODO make fun above along with script more versatile, for github
+;;; bitbucket others different url formats.
+(defun perso/dev/vigithub-file ()
+  (interactive)
+  (let ((absol-path (buffer-file-name))
+        (linum (format-mode-line "%l")))
+    (start-process "perso" nil "vigit-file" absol-path linum "blob")))
+
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;
 ;;;;;;;;;;;;;;;;;

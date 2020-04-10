@@ -12,21 +12,22 @@
 ;;;;;;;;;;;;;;
 (setq ibuffer-saved-filter-groups
       '(("default"
-         ("dired"  (mode . dired-mode))
-         ("Drupal" (filename . "drupal"))
-         ("php"    (filename . "\\.php$\\|\\.inc$"))
-         ("html"   (filename . "\\.\\(p\\)?html$\\|\\.tpl$"))
-         ("css"    (filename . "\\.css"))
-         ("js"     (filename . "\\.js\\(on\\)?"))
-         ("emacs"  (or
-                    (name . "^\\*scratch\\*$")
-                    (name . "^\\*Messages\\*$")))
-         ("elisp"  (mode . emacs-lisp-mode))
-         ("lisp"   (mode . lisp-mode))
-         ("bash"   (mode . sh-mode))
-         ("Org"    (name . "\\.org$"))
-         ("shells" (name . "\\*eshell\\*"))
-         ("magit"  (name . "^\\*magit\\(: \\|-\\).*\\*$")))))
+         ("bash"    (mode . sh-mode))
+         ("clojure" (mode . clojure-mode))
+         ("dired"   (mode . dired-mode))
+         ("drupal"  (filename . "drupal"))
+         ("elisp"   (mode . emacs-lisp-mode))
+         ("emacs"   (or
+                     (name . "^\\*scratch\\*$")
+                     (name . "^\\*Messages\\*$")))
+         ("lisp"    (mode . lisp-mode))
+         ("magit"   (or
+                     (name . "^\\magit\\(: \\|-\\)")
+                     (mode . magit-mode)))
+         ("org"     (name . "\\.org\\(\\.gpg\\)?$"))
+         ("php"     (filename . "\\.php$\\|\\.inc$"))
+         ("shells"  (name . "\\*eshell\\*"))
+         ("web"     (mode . web-mode)))))
 
 (add-hook 'ibuffer-mode-hook '(lambda ()
                                (ibuffer-auto-mode 1)
