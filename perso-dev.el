@@ -8,28 +8,27 @@ is first converted to its rgb decimal counterparts."
   (let* ((rgb (perso/dev/list-rgb-of-hex hex))
          (bounds (bounds-of-thing-at-point 'symbol))
          (new-hex (loop
-                     for c in rgb
-                     append
-                       (let* ((a (+ amount (cdr c)))
-                              (b (cond ((< a 0) 0)
-                                       ((> a 255) 255)
-                                       (t a)))
-                              (c (format "%x" b)))
-                         (list (if (< (length c) 2) (concat "0" c) c)))
-                     into new-hex
-                     finally return (mapconcat 'identity new-hex ""))))
+                   for c in rgb
+                   append
+                   (let* ((a (+ amount (cdr c)))
+                          (b (cond ((< a 0) 0)
+                                   ((> a 255) 255)
+                                   (t a)))
+                          (c (format "%x" b)))
+                     (list (if (< (length c) 2) (concat "0" c) c)))
+                   into new-hex
+                   finally return (mapconcat 'identity new-hex ""))))
     (kill-region (car bounds) (cdr bounds))
     (insert new-hex)))
 
 (defun perso/dev/short-to-full-hex (hex)
   (cond
-    ((= 3 (length hex))
-     (loop
-        for c in (string-to-list hex)
-        for d = (make-string 2 c) then (concat d (make-string 2 c))
-        do (message "%s" d)
-        finally return d))
-    (t hex)))
+   ((= 3 (length hex))
+    (loop
+     for c in (string-to-list hex)
+     for d = (make-string 2 c) then (concat d (make-string 2 c))
+     finally return d))
+   (t hex)))
 
 (defun perso/dev/list-rgb-of-hex (hex)
   "Returns `RGB' in decimal."
@@ -37,12 +36,11 @@ is first converted to its rgb decimal counterparts."
   (mapcar* 'cons
            '(:r :g :b)
            (loop
-              for c across (perso/dev/short-to-full-hex hex)
-              for cc = (make-string 1 c) then
-                (if (= 2 (length cc))
-                    (make-string 1 c)
-                  (concat cc (make-string 1 c)))
-              when (= 2 (length cc)) collect (string-to-number cc 16))))
+            for c across (perso/dev/short-to-full-hex hex)
+            for cc = (make-string 1 c) then (if (= 2 (length cc))
+                                                (make-string 1 c) ; reset cc to the first (16¹) position of the next hex'ed color.
+                                              (concat cc (make-string 1 c)))
+            when (= 2 (length cc)) collect (string-to-number cc 16))))
 
 (defun perso/dev/kill-rgb-of-hex (hex)
   (interactive (list (thing-at-point 'symbol)))
@@ -51,6 +49,13 @@ is first converted to its rgb decimal counterparts."
          (g   (cdr (assoc :g rgb)))
          (b   (cdr (assoc :b rgb))))
     (kill-new (format "%s, %s, %s" r g b))))
+
+(defun perso/dev/kill-hex-of-dec (dec)
+  "Returns the HEX value of a `DEC' one."
+  (interactive (list (number-at-point)))
+  (let ((hex (concat (format "%x" (/ dec 16))
+                     (format "%x" (% dec 16)))))
+    (kill-new hex)))
 
 (defun perso/dev/refresh-chromium (tab)
   (interactive "p")
@@ -69,7 +74,7 @@ is first converted to its rgb decimal counterparts."
   (perso/dev/refresh-chromium tab))
 
 (fset 'perso/dev/line-down-section
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("]" 0 "%d")) arg)))
+      (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("]" 0 "%d")) arg)))
 
 (fset 'perso/dev/line-up-section
       (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("[" 0 "%d")) arg)))
@@ -78,7 +83,7 @@ is first converted to its rgb decimal counterparts."
   (interactive)
   (let ((absol-path (buffer-file-name))
         (linum (format-mode-line "%l")))
-    (start-process "perso" nil "vigit-file" absol-path linum)))
+    (start-process "perso" nil "vigit-file" "-f" absol-path "-l" linum)))
 
 ;;; TODO make fun above along with script more versatile, for github
 ;;; bitbucket others different url formats.
@@ -86,7 +91,7 @@ is first converted to its rgb decimal counterparts."
   (interactive)
   (let ((absol-path (buffer-file-name))
         (linum (format-mode-line "%l")))
-    (start-process "perso" nil "vigit-file" absol-path linum "blob")))
+    (start-process "perso" nil "vigit-file" "-f" absol-path "-l" linum)))
 
 ;;;;;;;;;;;;;;;;;
 ;; keybindings ;;

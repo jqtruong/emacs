@@ -16,6 +16,7 @@
 ;; modes ;;
 ;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.htm$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.gsp$"  . web-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))

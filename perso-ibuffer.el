@@ -26,6 +26,7 @@
                      (mode . magit-mode)))
          ("org"     (name . "\\.org\\(\\.gpg\\)?$"))
          ("php"     (filename . "\\.php$\\|\\.inc$"))
+         ("python"  (mode . python-mode))
          ("shells"  (name . "\\*eshell\\*"))
          ("web"     (mode . web-mode)))))
 
