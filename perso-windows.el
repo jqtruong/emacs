@@ -206,13 +206,13 @@ is dedicated."
                            (?3 split-window-right)
                            (?# perso/windows/lickity-split)
                            (?! jqt/toggle-window-dedication)
-                           ;; normally i use a DELTA of 10 when i run
+                           ;; normally i use a `DELTA' of 10 when i run
                            ;; the command manually and wondering if
                            ;; it's because i have the font set much
                            ;; lower (maybe twice lower) that i only
-                           ;; need to use a DELTA of 5 here.
-                           (?- (enlarge-window -2))
-                           (?+ (enlarge-window 2))
+                           ;; need to use a lower `DELTA' value here.
+                           (?- '(enlarge-window -5))
+                           (?+ '(enlarge-window  5))
 
                            ;; move about buffer (should move this out to
                            ;; perso-buffer-manager)
