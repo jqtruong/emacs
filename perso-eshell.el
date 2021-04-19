@@ -64,20 +64,25 @@ Added to eshell-output-filter-functions through customization."
   "Function for customized value for eshell-skip-prompt.")
 
 (defun perso/eshell/use-existing-window (orig-fun &rest args)
-  "If a window exists with an eshell buffer, switch to it first."
+  "If a window exists with an eshell buffer, switch to it first.
+
+`ORIG-FUN': call the original function finding a buffer.
+`ARGS': not needed... should probably delete it from the signature."
   (interactive "P")
-  (let ((eshell-buffers (remove-if-not
-                         (lambda (buffer) (string-match "\*eshell\*" (buffer-name buffer)))
-                         (buffer-list))))
-    (if (loop
-           for buffer in eshell-buffers
-           for window = (get-buffer-window buffer)
-           when window
-           return (select-window window))
-        (sswitcher--prepare-for-fast-key)
-      (progn
-        (apply orig-fun nil)
-        (forward-page)))))
+  (let* ((eshell-buffers (remove-if-not
+                          (lambda (buffer) (string-match "\*eshell\*" (buffer-name buffer)))
+                          (buffer-list)))
+         (eshell-buffer (car eshell-buffers))
+         (existing-window (get-buffer-window eshell-buffer t)))
+    (cond (existing-window
+           (progn
+             (select-frame-set-input-focus (window-frame existing-window))
+             (select-window existing-window)
+             (sswitcher--prepare-for-fast-key)))
+          (t
+           (progn
+             (apply orig-fun nil)
+             (forward-page))))))
 
 (advice-add 'shell-switcher-switch-buffer :around
             #'perso/eshell/use-existing-window)

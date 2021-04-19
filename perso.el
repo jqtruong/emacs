@@ -108,7 +108,6 @@
 (require 'perso-sql)
 (require 'perso-web-mode)
 (require 'perso-windows)
-
 (require 'ag)
 (require 'auto-dim-other-buffers)
 (require 'bs)
@@ -407,6 +406,7 @@ customizingly useless"
 (global-set-key (kbd "C-x B")     'bs-show)
 (global-set-key (kbd "C-x C-b")   'helm-for-files)
 (global-set-key (kbd "C-x C-o")   (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "M-'")       'other-frame)
 (global-set-key (kbd "C-x O")     'other-frame)
 (global-set-key (kbd "C-x C-S-o") (lambda () (interactive) (other-frame -1)))
 (global-set-key (kbd "C-x 2")     (lambda () (interactive)
@@ -416,7 +416,10 @@ customizingly useless"
                                      (split-window-horizontally)
                                      (other-window 1)))
 (global-set-key (kbd "M-x")       'smex)
-;; (define-key grep-mode-map (kbd "C-x C-f") 'perso/goto-from-*grep*)
+
+;;; i should use the other function that switches the keybinding for a
+;;; named function to call another, so it's more obvious what changed
+;;; with these overrides.
 
 ;; custom
 (global-unset-key (kbd "C-c r"))
@@ -436,13 +439,23 @@ customizingly useless"
 (global-set-key (kbd "C-c w r")       'winner-redo)
 (global-set-key (kbd "C-c l")         'org-store-link)
 (global-set-key (kbd "C-S-s")         'ag)
-
+(global-set-key (kbd "M-\"")          (lambda () (interactive) (other-frame -1)))
+(global-set-key (kbd "s-\"")          'previous-window-any-frame)
+(global-set-key (kbd "M-W")           (lambda () (interactive)
+                                        (let ((symbol (thing-at-point 'symbol)))
+                                          (message "`%s' → kill ring" symbol)
+                                          (kill-new symbol))))
 ;; map
-(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'comment-box)
-(define-key emacs-lisp-mode-map (kbd "M-p") 'perso/previous-def)
-(define-key emacs-lisp-mode-map (kbd "M-n") 'perso/next-def)
-(define-key emacs-lisp-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
-(define-key lisp-interaction-mode-map (kbd "C-x C-S-e")  'eval-print-last-sexp)
+(define-key emacs-lisp-mode-map (kbd "C-c C-c")         'comment-box)
+(define-key emacs-lisp-mode-map (kbd "M-p")             'perso/previous-def)
+(define-key emacs-lisp-mode-map (kbd "M-n")             'perso/next-def)
+(define-key emacs-lisp-mode-map (kbd "C-x C-S-e")       'eval-print-last-sexp)
+(define-key lisp-interaction-mode-map (kbd "C-x C-S-e") 'eval-print-last-sexp)
+(define-key paredit-mode-map (kbd "C-\"")               'paredit-meta-doublequote)
+(define-key paredit-mode-map (kbd "M-\"")               (lambda () (interactive) (other-frame -1)))
+(define-key ag-mode-map (kbd "k")                       '(lambda () (interactive)
+                                                           (let (kill-buffer-query-functions) (kill-buffer))
+                                                           (delete-window)))
 
 ;;;;;;;;;
 ;; end ;;
